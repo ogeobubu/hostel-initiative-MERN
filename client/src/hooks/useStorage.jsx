@@ -31,13 +31,9 @@ const useStorage = (files) => {
           );
         });
 
-        if (Object.keys(storeImagesArray).length !== 0) {
-          await Promise.all(storeImagesArray)
-            .then(() =>
-              setSuccess("All images have been uploaded successfully")
-            )
-            .catch((error) => setError(error));
-        }
+        await Promise.all(storeImagesArray)
+          .then(() => setSuccess("All images have been uploaded successfully"))
+          .catch((error) => setError(error));
       }
     };
     storeFile();

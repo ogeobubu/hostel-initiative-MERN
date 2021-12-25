@@ -16,6 +16,7 @@ import firebase from "firebase";
 import axios from "axios";
 import TableComponent from "../components/TableComponent";
 import { dispatchUserAllAccomodations } from "../redux/accomodationsSlice.js";
+import { Link } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -434,18 +435,20 @@ const DashboadHome = () => {
             <CardTitle>TOTAL ACCOMODATIONS</CardTitle>
             <CardNumber>{userAllAccomodations?.length}</CardNumber>
             <CardButtonContainer>
-              <CardButton>Create New</CardButton>
+              <Link className="link" to="/dashboard/manage">
+                <CardButton>Create New</CardButton>
+              </Link>
             </CardButtonContainer>
           </Card>
 
           <Card>
             <CardTitle>TOTAL ENGAGEMENTS</CardTitle>
-            <CardNumber>15,140</CardNumber>
+            <CardNumber>null</CardNumber>
           </Card>
 
           <Card>
             <CardTitle>TOTAL AGENTS</CardTitle>
-            <CardNumber>100</CardNumber>
+            <CardNumber>null</CardNumber>
           </Card>
         </Cards>
 

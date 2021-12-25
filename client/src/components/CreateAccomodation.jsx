@@ -145,9 +145,41 @@ const FormImageClick = styled.div`
 `;
 const FormImage = styled.input``;
 
+const Select = styled.select`
+outline: none;
+  min-width: 693px;
+  flex: 1;
+  height: 49px;
+  background: #fcfcfc;
+  border: 1px solid #f9f9f9;
+  border-radius: 5px;
+  padding: 1rem;
+  color: #d5d5d5;
+
+  ${tablet({
+    minWidth: "100%",
+  })};
+
+  &::placeholder {
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 17px;
+    color: #d5d5d5;
+  }
+`;
+const Option = styled.option`
+color: #d5d5d5;
+
+`;
+
 const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
+  const userAccomodations = useSelector(
+    (state) => state.accomodations.getAllUserAccomodations
+  );
   const accomodations = useSelector(
     (state) => state.accomodations.getAllAccomodations
   );
@@ -169,6 +201,8 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
   const [authState, setAuthState] = useState("");
 
   const { urls, progress, success, error, setSuccess } = useStorage(files);
+
+  console.log(urls);
 
   console.log(urls, success);
 
@@ -257,7 +291,7 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             renewal: renewal ? renewal : accomodation.renewal,
             description: description ? description : accomodation.description,
             features: features
-              ? features
+              ? [features]
               : accomodation.features?.map((feature) => {
                   return feature.split(",");
                 }),
@@ -317,6 +351,13 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             images: urls,
           };
 
+          if (Object.keys(urls).length === 0) {
+            return toast(
+              "Image cannot be empty. Kindly ensure you have at least one photo successfully uploaded.",
+              { type: "error" }
+            );
+          }
+
           const response = await axios.post(
             "/api/accomodations/create",
             createAccomodationData,
@@ -330,13 +371,13 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             type: "success",
           });
           dispatch(
-            dispatchAllAccomodations([response.data.message, ...accomodations])
-          );
-          dispatch(
             dispatchUserAllAccomodations([
               response.data.message,
-              ...accomodations,
+              ...userAccomodations,
             ])
+          );
+          dispatch(
+            dispatchAllAccomodations([response.data.message, ...accomodations])
           );
           setTitle("");
           setAddress("");
@@ -436,7 +477,9 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             <FormLabel>Address</FormLabel>
             <FormInput
               placeholder={
-                editID ? accomodation?.location : "e.g Single room at damico"
+                editID
+                  ? accomodation?.location
+                  : "e.g 10, Asherifa Street, Ile-Ife, Osun State"
               }
               type="text"
               onChange={(e) => setAddress(e.target.value)}
@@ -447,25 +490,28 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
           <FormController>
             <FormLabel>Price</FormLabel>
             <FormInput
-              placeholder={
-                editID ? accomodation?.price : "e.g Single room at damico"
-              }
-              type="text"
-              onChange={(e) => setPrice(e.target.value)}
+              placeholder={editID ? accomodation?.price : "Price in naira"}
+              type="number"
+              onChange={(e) => setPrice(+e.target.value)}
               defaultValue={editID && accomodation?.price}
             />
           </FormController>
 
           <FormController>
             <FormLabel>Renewal Period</FormLabel>
-            <FormInput
+            <Select
               placeholder={
                 editID ? accomodation?.renewal : "e.g Single room at damico"
               }
               type="text"
-              onChange={(e) => setRenewal(e.target.value)}
+              onChange={(e) => setRenewal(+e.target.value)}
               defaultValue={editID && accomodation?.renewal}
-            />
+            >
+              <Option disabled>Renewal</Option>
+              <Option value="1">1 year</Option>
+              <Option value="2">2 years</Option>
+              <Option value="3">3 years</Option>
+            </Select>
           </FormController>
 
           <FormController>
@@ -501,11 +547,10 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
 
           <FormController>
             <FormLabel>Images</FormLabel>
-            <FormInput
-              placeholder={Object.keys(files).length !== 0 && success}
-              type="text"
-              disabled={true}
-            />
+            <FormSubLabel>
+              You can select and upload multiple photos.
+            </FormSubLabel>
+            <FormInput type="text" disabled={true} />
             <FormImageClick>
               <label style={{ cursor: "pointer", fontSize: "14px" }} for="fusk">
                 + Add Photo

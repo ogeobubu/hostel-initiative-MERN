@@ -229,7 +229,10 @@ const Market = () => {
   const [featureSearch, setFeatureSearch] = useState(null);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState("");
-  const [status, setStatus] = useState("newest");
+  const [sort, setSort] = useState("newest");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  console.log(filteredProducts);
 
   console.log(filters);
 
@@ -237,7 +240,6 @@ const Market = () => {
     const getSearch = async () => {
       const response = await axios.get(`/api/accomodations?feature=${search}`);
       setFeatureSearch(response.data.message);
-      console.log(response.data.message);
     };
     getSearch();
   }, [search]);
@@ -253,6 +255,31 @@ const Market = () => {
       [e.target.name]: value,
     });
   };
+
+  useEffect(() => {
+    filters &&
+      setFilteredProducts(
+        allAccomodations.filter((item) =>
+          Object.entries(filters).every(([key, value]) =>
+            item[key].includes(value)
+          )
+        )
+      );
+  }, [allAccomodations, search, filters]);
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prev) => [...prev].sort((a, b) => a.date - b.date));
+    } else if (sort === "asc") {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prev) =>
+        [...prev].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
 
   return (
     <>
@@ -278,34 +305,32 @@ const Market = () => {
             <OptionContainer>
               <Select name="location" onChange={handleFilters}>
                 <Option disabled>Location</Option>
-                <Option>ibadan-road</Option>
-                <Option>asherifa</Option>
-                <Option>modakeke</Option>
-                <Option>mayfair</Option>
-                <Option>lagere</Option>
-                <Option>campus</Option>
               </Select>
             </OptionContainer>
             <OptionContainer>
               <Select name="renewal" onChange={handleFilters}>
                 <Option disabled>Renewal</Option>
-                <Option>1</Option>
-                <Option>2</Option>
+                <Option>a year</Option>
+                <Option>a year</Option>
               </Select>
             </OptionContainer>
             <OptionContainer>
-              <InputOption placeholder="Price range" />
+              <Select name="price" onChange={(e) => setSort(e.target.value)}>
+                <Option value="newest">Newest</Option>
+                <Option value="ascending">Price (asc)</Option>
+                <Option value="descending">Price (desc)</Option>
+              </Select>
             </OptionContainer>
           </Flex>
 
           <SectionMarket>
-            {featureSearch
-              ? featureSearch?.map((item, index) => {
+            {filters
+              ? filteredProducts?.map((item, index) => {
                   return (
                     <AccomodationItem key={index} item={item} market="true" />
                   );
                 })
-              : allAccomodations?.map((item, index) => {
+              : allAccomodations?.slice(0, 8).map((item, index) => {
                   return (
                     <AccomodationItem key={index} item={item} market="true" />
                   );

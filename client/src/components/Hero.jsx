@@ -43,15 +43,13 @@ const Text = styled.h1`
   })};
 `;
 const Right = styled.div`
+background: ${(props) => (props.img ? `url(${hero}) no-repeat` : null)};
   position: absolute;
   right: 0;
   top: 0;
   z-index: 1;
   width: 630px;
-  height: 100%;
-  ${aboutResponsive({
-    width: "100%",
-  })}
+  height: 100vh;
 `;
 const Image = styled.img`
   width: 100%;
@@ -79,9 +77,7 @@ const Hero = () => {
             </Link>
           </Flex>
         </Left>
-        <Right>
-          <Image src={hero} alt="hero" />
-        </Right>
+        <Right img={hero} />
       </Container>
     </HeroSection>
   );

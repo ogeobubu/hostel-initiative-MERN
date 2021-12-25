@@ -5,6 +5,7 @@ export const accomodationsSlice = createSlice({
   initialState: {
     accomodations: [],
     getAllAccomodations: [],
+    getAllUserAccomodations: [],
   },
   reducers: {
     dispatchAccomodations: (state, action) => {
@@ -14,11 +15,16 @@ export const accomodationsSlice = createSlice({
     dispatchAllAccomodations: (state, action) => {
       state.getAllAccomodations = action.payload;
     },
+
+    dispatchUserAllAccomodations: (state, action) => {
+      state.getAllUserAccomodations = action.payload;
+    },
   },
 });
 
 export const {
   dispatchAccomodations,
   dispatchAllAccomodations,
+  dispatchUserAllAccomodations,
 } = accomodationsSlice.actions;
 export default accomodationsSlice.reducer;

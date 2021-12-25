@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -6,6 +8,7 @@ import image1 from "../assets/image1.png";
 import image2 from "../assets/image2.png";
 import image3 from "../assets/image3.png";
 import AccomodationItem from "../components/AccomdationItem";
+import { useSelector } from "react-redux";
 
 const SectionMarket = styled.section`
   margin-top: 40px;
@@ -172,7 +175,7 @@ const Flex = styled.div`
   margin-top: 31px;
   flex-wrap: wrap;
 `;
-const Option = styled.div`
+const OptionContainer = styled.div`
   margin-right: 28px;
   margin-bottom: 1.5rem;
 `;
@@ -208,7 +211,49 @@ const LoadButton = styled.button`
   color: #969696;
 `;
 
+const Select = styled.select`
+width: 323px;
+  height: 52px;
+  background: #fdfdfd;
+  border: 1px solid #f1f1f1;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  color: grey;
+  ${mobile({
+    width: "100%",
+  })};
+`;
+const Option = styled.option``;
+
 const Market = () => {
+  const [featureSearch, setFeatureSearch] = useState(null);
+  const [search, setSearch] = useState("");
+  const [filters, setFilters] = useState("");
+  const [status, setStatus] = useState("newest");
+
+  console.log(filters);
+
+  useEffect(() => {
+    const getSearch = async () => {
+      const response = await axios.get(`/api/accomodations?feature=${search}`);
+      setFeatureSearch(response.data.message);
+      console.log(response.data.message);
+    };
+    getSearch();
+  }, [search]);
+
+  const allAccomodations = useSelector(
+    (state) => state.accomodations.getAllAccomodations
+  );
+
+  const handleFilters = (e) => {
+    const value = e.target.value;
+    setFilters({
+      ...filters,
+      [e.target.name]: value,
+    });
+  };
+
   return (
     <>
       <Header />
@@ -219,28 +264,52 @@ const Market = () => {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo
+            aliquip ex ea commodo.
           </Desc>
           <InputContainer>
-            <Input placeholder="Search" type="text" />
-            <Button>Search</Button>
+            <Input
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search By Features"
+              type="text"
+            />
+            <Button type="submit">Search</Button>
           </InputContainer>
           <Flex>
-            <Option>
-              <InputOption placeholder="Location" />
-            </Option>
-            <Option>
-              <InputOption placeholder="Status" />
-            </Option>
-            <Option>
+            <OptionContainer>
+              <Select name="location" onChange={handleFilters}>
+                <Option disabled>Location</Option>
+                <Option>ibadan-road</Option>
+                <Option>asherifa</Option>
+                <Option>modakeke</Option>
+                <Option>mayfair</Option>
+                <Option>lagere</Option>
+                <Option>campus</Option>
+              </Select>
+            </OptionContainer>
+            <OptionContainer>
+              <Select name="renewal" onChange={handleFilters}>
+                <Option disabled>Renewal</Option>
+                <Option>1</Option>
+                <Option>2</Option>
+              </Select>
+            </OptionContainer>
+            <OptionContainer>
               <InputOption placeholder="Price range" />
-            </Option>
+            </OptionContainer>
           </Flex>
 
           <SectionMarket>
-            {data.map((item) => (
-              <AccomodationItem key={item.id} item={item} market="true" />
-            ))}
+            {featureSearch
+              ? featureSearch?.map((item, index) => {
+                  return (
+                    <AccomodationItem key={index} item={item} market="true" />
+                  );
+                })
+              : allAccomodations?.map((item, index) => {
+                  return (
+                    <AccomodationItem key={index} item={item} market="true" />
+                  );
+                })}
           </SectionMarket>
 
           <LoadButton>Load More</LoadButton>

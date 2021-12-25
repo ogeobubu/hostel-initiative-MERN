@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import WindowSize from "../hooks/windowSize";
+import { mobile } from "../responsive.js";
 
 const Image = styled.img`
   margin-left: 39px;
@@ -19,7 +20,7 @@ const Buttons = styled.button`
   align-items: center;
   width: ${(props) =>
     props.outline === true
-      ? "133px"
+      ? "150px"
       : props.item === true
       ? "65px"
       : props.market === true
@@ -57,6 +58,11 @@ const Buttons = styled.button`
   margin-left: ${(props) => props.outline === true && "20px"};
   margin-top: ${(props) => (props.item === true ? 0 : "39px")};
   margin: ${(props) => props.market === true && "0 auto"};
+
+  ${mobile({
+    marginLeft: 0,
+    width: "100%",
+  })};
 `;
 
 const Button = ({ text, outline, item, market, arrowRight, main }) => {

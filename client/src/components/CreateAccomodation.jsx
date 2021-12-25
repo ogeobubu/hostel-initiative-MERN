@@ -8,6 +8,7 @@ import { openNav } from "../redux/navSlice";
 import {
   dispatchAllAccomodations,
   dispatchAccomodations,
+  dispatchUserAllAccomodations,
 } from "../redux/accomodationsSlice";
 import WindowSize from "../hooks/windowSize";
 import { tablet, mobile } from "../responsive.js";
@@ -330,6 +331,12 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
           });
           dispatch(
             dispatchAllAccomodations([response.data.message, ...accomodations])
+          );
+          dispatch(
+            dispatchUserAllAccomodations([
+              response.data.message,
+              ...accomodations,
+            ])
           );
           setTitle("");
           setAddress("");

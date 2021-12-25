@@ -15,6 +15,7 @@ import { auth, database } from "../config";
 import firebase from "firebase";
 import axios from "axios";
 import TableComponent from "../components/TableComponent";
+import { dispatchUserAllAccomodations } from "../redux/accomodationsSlice.js";
 
 const style = {
   position: "absolute",
@@ -318,6 +319,10 @@ const DashboadHome = () => {
   const accomodations = useSelector(
     (state) => state.accomodations.getAllAccomodations
   );
+  const user = useSelector((state) => state.user.user);
+  const userAllAccomodations = useSelector(
+    (state) => state.accomodations.getAllUserAccomodations
+  );
   const [userUid, setUserUid] = useState(null);
   const [key, setKey] = useState("");
   const [editID, setEditID] = useState("");
@@ -334,7 +339,6 @@ const DashboadHome = () => {
   const [file, setFile] = useState(null);
   const [authState, setAuthState] = useState("");
   const [data, setData] = useState([]);
-  console.log(data);
 
   const token = useSelector((state) => state.user.user.token);
   const { url, progress } = useStorage(file);
@@ -355,6 +359,14 @@ const DashboadHome = () => {
       setData(response.data.message);
     };
     getAllAccomodations();
+  }, []);
+
+  useEffect(() => {
+    const getAllUserAccomodations = async () => {
+      const response = await axios.get(`/api/users/profile/${user._id}`);
+      dispatch(dispatchUserAllAccomodations(response.data));
+    };
+    getAllUserAccomodations();
   }, []);
 
   // useEffect(() => {
@@ -420,7 +432,7 @@ const DashboadHome = () => {
         <Cards>
           <Card>
             <CardTitle>TOTAL ACCOMODATIONS</CardTitle>
-            <CardNumber>{accomodations?.length}</CardNumber>
+            <CardNumber>{userAllAccomodations?.length}</CardNumber>
             <CardButtonContainer>
               <CardButton>Create New</CardButton>
             </CardButtonContainer>

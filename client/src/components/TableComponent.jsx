@@ -11,6 +11,7 @@ import axios from "axios";
 import {
   dispatchAccomodations,
   dispatchAllAccomodations,
+  dispatchUserAllAccomodations,
 } from "../redux/accomodationsSlice";
 import useStorage from "../hooks/useStorage";
 
@@ -117,6 +118,9 @@ const TableComponent = ({ data }) => {
   const accomodation = useSelector(
     (state) => state.accomodations.accomodations
   );
+  const userAllAccomodations = useSelector(
+    (state) => state.accomodations.getAllUserAccomodations
+  );
   const token = useSelector((state) => state.user.token);
   const [editID, setEditID] = useState("");
   const [deleteID, setDeleteID] = useState("");
@@ -134,7 +138,9 @@ const TableComponent = ({ data }) => {
 
   const handleDelete = async (id) => {
     if (id) {
-      const filteredArr = accomodations.filter((newArr) => newArr._id !== id);
+      const filteredArr = userAllAccomodations.filter(
+        (newArr) => newArr._id !== id
+      );
       try {
         const response = await axios.delete(`/api/accomodations/${id}`, {
           headers: {
@@ -142,7 +148,7 @@ const TableComponent = ({ data }) => {
           },
         });
         toast(response?.data?.message, { type: "success" });
-        dispatch(dispatchAllAccomodations(filteredArr));
+        dispatch(dispatchUserAllAccomodations(filteredArr));
       } catch (error) {
         toast(error.response?.data?.message, { type: "error" });
       }
@@ -154,7 +160,7 @@ const TableComponent = ({ data }) => {
       <TableDiv>
         <Table>
           <Tbody>
-            {accomodations?.map(({ _id, title, location, price }) => (
+            {userAllAccomodations?.map(({ _id, title, location, price }) => (
               <Tr key={_id}>
                 <Td>{title}</Td>
                 <Td>{location}</Td>

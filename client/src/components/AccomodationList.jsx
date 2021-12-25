@@ -11,11 +11,21 @@ import { useSelector } from "react-redux";
 
 const Section = styled.section`
   margin-top: 40px;
-  display: flex;
+  width: 100%;
+  
+`;
+
+const Container = styled.div`
+display: flex;
   margin-left: 5rem;
   margin-bottom: 41px;
+  width: max-content;
+  overflow-x: hidden;
+  transform: translateX(0);
+transition: all 500ms;
   ${mobile({
     marginLeft: 0,
+    width: "100%",
   })};
 `;
 
@@ -41,19 +51,41 @@ const data = [
     location: "12, Harakiri, Damico Estate, Ile-ife",
     price: "80,000",
   },
+  {
+    id: 4,
+    image: image3,
+    name: "Single Room at Damico",
+    location: "12, Harakiri, Damico Estate, Ile-ife",
+    price: "80,000",
+  },
+  {
+    id: 5,
+    image: image3,
+    name: "Single Room at Damico",
+    location: "12, Harakiri, Damico Estate, Ile-ife",
+    price: "80,000",
+  },
+  {
+    id: 6,
+    image: image3,
+    name: "Single Room at Damico",
+    location: "12, Harakiri, Damico Estate, Ile-ife",
+    price: "80,000",
+  },
 ];
 
-const AccomodationList = () => {
+const AccomodationList = ({ current, showPage, getRef }) => {
   const allAccomodations = useSelector(
     (state) => state.accomodations.getAllAccomodations
   );
-  console.log(allAccomodations);
   return (
     <>
       <Section>
-        {allAccomodations.map((item) => (
-          <AccomodationItem key={item._id} item={item} />
-        ))}
+        <Container ref={getRef}>
+          {allAccomodations.map((item, index) => {
+            return <AccomodationItem key={item._id} item={item} />;
+          })}
+        </Container>
       </Section>
       <Link className="link" to="/market">
         <Button market="true" text="Go to Marketplace" arrowRight={darkRight} />

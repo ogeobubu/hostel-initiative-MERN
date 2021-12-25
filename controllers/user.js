@@ -3,12 +3,6 @@ const Accomodation = require("../models/Accomodation.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const createLoginToken = (payload) => {
-  return jwt.sign(payload, "helloworld123", {
-    expiresIn: "1d",
-  });
-};
-
 exports.create = async (req, res) => {
   try {
     const { firstName, lastName, agencyName, email, phone, address, password } =
@@ -85,13 +79,12 @@ exports.login = async (req, res) => {
         });
       } else {
         const createRefreshToken = (payload) => {
-          return jwt.sign(payload, "helloworld123", {
+          return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
             expiresIn: "7d",
           });
         };
 
         const refresh_token = createRefreshToken({ id: user._id });
-        console.log(refresh_token);
 
         res.cookie("refreshtoken", refresh_token, {
           httpOnly: true,
@@ -117,10 +110,11 @@ exports.getAccessToken = (req, res) => {
     if (!rf_token)
       return res.status(400).json({ message: "Please login now!" });
 
-    jwt.verify(rf_token, "helloworld123", (error, user) => {
+    jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (error, user) => {
       if (error) return res.status(400).json({ message: "Please login now!" });
+
       const createAccessToken = (payload) => {
-        return jwt.sign(payload, "helloworld123", {
+        return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
           expiresIn: "15m",
         });
       };
@@ -137,7 +131,6 @@ exports.getAccessToken = (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
-
     if (!user) {
       return res.status(400).json({
         message: "This user does not exists.",
@@ -147,6 +140,28 @@ exports.getUser = async (req, res) => {
         message: user,
       });
     }
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+exports.accomodationUser = async (req, res) => {
+  try {
+    const user = await User.findById({ _id: req.params.id });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "This user does not exist.",
+      });
+    } else {
+      const { isVerified, isAdmin, password, ...rest } = user._doc;
+      return res.status(200).json({
+        message: rest,
+      });
+    }
+    res.send(user);
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -214,5 +229,14 @@ exports.getUserAllAccomodations = async (req, res) => {
     return res.status(500).json({
       message: error.message,
     });
+  }
+};
+
+exports.logout = async (req, res) => {
+  try {
+    res.clearCookie("refreshtoken", { path: "/api/users/refresh_token" });
+    return res.status(200).json({ message: "Logged out." });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
   }
 };

@@ -43,7 +43,7 @@ const ProfileDetails = styled.div`
 `;
 const ProfilePictureContainer = styled.div`
   width: 268px;
-  height: 280px;
+  height: 268px;
   border: 5px solid #ffffff;
   border-radius: 5px;
   margin-right: 33px;
@@ -358,7 +358,7 @@ const Account = () => {
           <AccountTitle>Account</AccountTitle>
           <ProfileDetails>
             <ProfilePictureContainer>
-              <ProfilePicture src={myProfilePic} alt="profile" />
+              <ProfilePicture src={user?.profilePicture} alt="profile" />
             </ProfilePictureContainer>
             <ProfileInfos>
               <ProfileInfoDiv>

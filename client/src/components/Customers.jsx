@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import me from "../assets/me.png";
 import logo from "../assets/logo.png";
@@ -140,32 +141,74 @@ const Grid = styled.div`
   })}
 `;
 
+const data = [
+  {
+    id: 1,
+    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse",
+    image: me,
+    name: "Akinyemi Abass",
+    job: "Agent for Heroku house",
+  },
+  {
+    id: 2,
+    text: "A text from Oge Obubu.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse",
+    image: me,
+    name: "Andreti Obubu",
+    job: "Agent for Reto house",
+  },
+];
+
 const Customers = () => {
+  const [current, setCurrent] = useState(0);
+  const length = data.length;
+
+  const nextSlide = () => {
+    setCurrent(current === length - 1 ? 0 : current + 1);
+  };
+
+  const prevSlide = () => {
+    setCurrent(current === 0 ? length - 1 : current - 1);
+  };
   return (
     <Section>
       <Container>
         <Left>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse
-          </Text>
+          {data.map((info, index) => {
+            return (
+              <>
+                {index === current && (
+                  <>
+                    <Text>{info.text}</Text>
 
-          <User>
-            <ImageContainer>
-              <Image src={me} alt="me" />
-            </ImageContainer>
-            <Bio>
-              <Name>Akinyemi Abass</Name>
-              <Job>Agent for Heroku house</Job>
-            </Bio>
-          </User>
-
+                    <User>
+                      <ImageContainer>
+                        <Image src={info.image} alt="me" />
+                      </ImageContainer>
+                      <Bio>
+                        <Name>{info.name}</Name>
+                        <Job>{info.job}</Job>
+                      </Bio>
+                    </User>
+                  </>
+                )}
+              </>
+            );
+          })}
           <Flex>
-            <Arrows profileOutline="true" />
-            <Arrows profile="true" darkRights="darkRight" />
+            <Arrows
+              outline="true"
+              profileOutline="true"
+              customerDirection="left"
+              prevSlide={prevSlide}
+              style={{ cursor: "pointer" }}
+            />
+            <Arrows
+              profile="true"
+              darkRights="darkRight"
+              customerDirection="right"
+              nextSlide={nextSlide}
+              style={{ cursor: "pointer" }}
+            />
           </Flex>
         </Left>
         <Right>

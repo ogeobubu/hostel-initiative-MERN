@@ -9,5 +9,4 @@ export default configureStore({
     user: userReducer,
     accomodations: accomodationsReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });

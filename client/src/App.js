@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Product from "./pages/Product";
 import Market from "./pages/Market";
@@ -47,7 +52,6 @@ function App() {
           },
         });
         dispatch(dispatchUser(response.data.message));
-        dispatch(dispatchIsLogged());
       };
       getUser();
     }
@@ -84,29 +88,36 @@ function App() {
     };
     getAllAccomodations();
   }, [dispatch]);
+
   return (
-    <>
+    <div className="container">
       <ToastContainer />
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:_id" element={<Product />} />
           <Route path="/market" element={<Market />} />
           <Route
             path="/signup"
-            element={isLogged === true ? <Dashboard /> : <Signup />}
+            element={
+              isLogged === true ? <Navigate to="/dashboard" /> : <Signup />
+            }
           />
           <Route
             path="/signin"
-            element={isLogged === true ? <Dashboard /> : <Signin />}
+            element={
+              isLogged === true ? <Navigate to="/dashboard" /> : <Signin />
+            }
           />
           <Route
             path="/dashboard/*"
-            element={isLogged === true ? <Dashboard /> : <Signin />}
+            element={
+              isLogged === true ? <Dashboard /> : <Navigate to="/signin" />
+            }
           />
         </Routes>
       </Router>
-    </>
+    </div>
   );
 }
 

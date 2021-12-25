@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import rightArrow from "../assets/rightArrow.png";
 import leftArrow from "../assets/leftArrow.png";
@@ -35,11 +36,32 @@ border: ${(props) =>
 `;
 const Image = styled.img``;
 
-const Arrows = ({ outline, profile, profileOutline, darkRights }) => {
+const Arrows = ({
+  outline,
+  profile,
+  profileOutline,
+  darkRights,
+  position,
+  handleClick,
+  prevSlide,
+  nextSlide,
+  customerDirection,
+}) => {
   return (
     <ArrowContainer
       profile={profile ? true : false}
       outline={outline ? true : false}
+      onClick={
+        position === "left"
+          ? () => handleClick("left")
+          : position === "right"
+          ? () => handleClick("right")
+          : customerDirection === "left"
+          ? () => prevSlide()
+          : customerDirection === "right"
+          ? () => nextSlide()
+          : null
+      }
     >
       <Image
         src={

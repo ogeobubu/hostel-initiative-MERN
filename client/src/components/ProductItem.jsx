@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+import { useParams, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { aboutResponsive, tablet, largeTablet, mobile } from "../responsive.js";
 import location from "../assets/location.png";
@@ -14,6 +16,7 @@ import whatsapp from "../assets/whatsapp.png";
 import gmail from "../assets/gmail.png";
 import Footer from "./Footer";
 import Accomodation from "./Accomodation";
+import axios from "axios";
 
 const data = [
   {
@@ -281,13 +284,23 @@ const Profile = styled.div`
     alignItems: "center",
   })};
 `;
+const ImageContainer = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+width: 80px;
+height: 80px;
+border-radius: 50%;
+margin-right: 19px;
+${mobile({
+  marginRight: 0,
+})};
+`;
 const ImageProfile = styled.img`
-  margin-right: 19px;
-  height: 80px;
-  width: 80px;
-  ${mobile({
-    marginRight: 0,
-  })};
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 `;
 const Bio = styled.div`
   display: flex;
@@ -340,32 +353,60 @@ const FlexBox = styled.div`
 `;
 
 const ProductItem = () => {
+  const { _id } = useParams();
+  const [accomodation, setAccomodation] = useState([]);
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    const getSingleAccomodation = async () => {
+      const response = await axios.get(`/api/accomodations/${_id}`);
+      setAccomodation(response.data.message);
+    };
+    getSingleAccomodation();
+  }, [_id]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await axios.get(`/api/users/${accomodation.userId}`);
+      setUser(response.data.message);
+    };
+    getUser();
+  }, [accomodation.userId]);
+
   return (
     <Section>
       <Container>
         <Head>
           <Left>
-            <Title>Single Room At Damico</Title>
+            <Title>{accomodation?.title}</Title>
             <Flex>
               <Image src={location} alt="location" />
-              <Location>12, Harakiri, Damico Estate, Ile-ife</Location>
+              <Location>{accomodation?.location}</Location>
             </Flex>
           </Left>
           <Right>
             <Price>
-              NGN80,000<Span>/yr</Span>
+              NGN{accomodation?.price}
+              <Span>/yr</Span>
             </Price>
             <Flex>
               <Image src={recent} alt="recent" />
-              <Date>12, December, 2021</Date>
+              <Date>{accomodation?.date}</Date>
             </Flex>
           </Right>
         </Head>
 
         <Photos>
-          {data.map(({ id, image }) => (
-            <Photo key={id} src={image} alt={id} />
-          ))}
+          {accomodation?.images ? (
+            accomodation?.images.map((image, index) => {
+              return <Photo key={index} src={image} alt={index} />;
+            })
+          ) : (
+            <Photo
+              src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=784&q=80"
+              alt="default image"
+            />
+          )}
         </Photos>
 
         <FlexOne>
@@ -377,16 +418,7 @@ const ProductItem = () => {
                   <Line />
                   <De>Description</De>
                 </Me>
-                <Text>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                  irure dolor in reprehenderit in voluptate velit esse cillum
-                  dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                  cupidatat non proident, sunt in culpa qui officia deserunt
-                  mollit anim id est laborum.
-                </Text>
+                <Text>{accomodation?.description}</Text>
               </Div>
             </AccoHead>
 
@@ -398,17 +430,10 @@ const ProductItem = () => {
                   <De>Features</De>
                 </Me>
                 <Col>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
-                  <ColText>Constant Electricity</ColText>
+                  {accomodation?.features &&
+                    accomodation?.features.map((feature) => {
+                      return <ColText>{feature}</ColText>;
+                    })}
                 </Col>
               </Div>
             </AccoHead>
@@ -416,20 +441,34 @@ const ProductItem = () => {
           <FlexRight>
             <Main>Agent</Main>
             <Profile>
-              <ImageProfile src={me} alt="me" />
+              <ImageContainer>
+                <ImageProfile src={user?.profilePicture} alt="me" />
+              </ImageContainer>
               <Bio>
-                <Name>Akinyemi Abass</Name>
+                <Name>
+                  {user?.firstName} {user?.lastName}
+                </Name>
                 <Des>
-                  Agent for Heroku houses with the aim of housing as many
-                  ile-ife residents as possible. Like what you see, send me a
-                  message
+                  {user?.bio
+                    ? user?.bio
+                    : `Agent ${user?.firstName} doesn't have a bio for now.`}
                 </Des>
                 <FlexBox>
+                  {user?.whatsapp && (
+                    <Box>
+                      <a
+                        className="link"
+                        href={`https://wa.me/${user?.whatsapp}/?text=GreetingsAgent${user?.firstName}`}
+                      >
+                        <ImageSocial src={whatsapp} alt="whatsapp" />
+                      </a>
+                    </Box>
+                  )}
+
                   <Box>
-                    <ImageSocial src={whatsapp} alt="whatsapp" />
-                  </Box>
-                  <Box>
-                    <ImageSocial src={gmail} alt="gmail" />
+                    <a className="link" href={`mailto:${user?.email}`}>
+                      <ImageSocial src={gmail} alt="gmail" />
+                    </a>
                   </Box>
                 </FlexBox>
               </Bio>

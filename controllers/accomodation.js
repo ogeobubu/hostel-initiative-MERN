@@ -36,16 +36,37 @@ exports.create = async (req, res) => {
 };
 
 exports.getAllAccomodations = async (req, res) => {
+  const latestQuery = req.query.latest;
+  const featureQuery = req.query.feature;
   try {
-    const accomodation = await Accomodation.find();
-    if (!accomodation) {
-      return res.status(400).json({
-        message: "Accomodations do not exist!",
+    let accomodations;
+
+    if (latestQuery) {
+      accomodations = await Accomodation.find().sort({ date: -1 }).limit(6);
+      return res.status(200).json({
+        message: accomodations,
+      });
+    } else if (featureQuery) {
+      accomodations = await Accomodation.find({
+        features: {
+          $in: [featureQuery],
+        },
+      });
+
+      return res.status(200).json({
+        message: accomodations,
       });
     } else {
-      return res.status(200).json({
-        message: accomodation,
-      });
+      accomodations = await Accomodation.find();
+      if (!accomodations) {
+        return res.status(400).json({
+          message: "Accomodations do not exist!",
+        });
+      } else {
+        return res.status(200).json({
+          message: accomodations,
+        });
+      }
     }
   } catch (error) {
     return res.status(500).json({

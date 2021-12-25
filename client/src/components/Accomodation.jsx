@@ -1,21 +1,23 @@
+import { useState, useRef } from "react";
 import styled from "styled-components";
 import building from "../assets/building.png";
 import Arrows from "./Arrows";
 import AccomodationList from "./AccomodationList";
 import { aboutResponsive, tablet, mobile } from "../responsive.js";
+import { useSelector } from "react-redux";
+import WindowSize from "../hooks/windowSize";
 
 const Section = styled.section`
-  margin-top: ${(props) => (props.similar === true ? "99px" : "263px")};
+  margin-top: ${(props) => (props.similar === true ? "99px" : "200px")};
   overflow-x: hidden;
+padding: 0 6rem;
+${mobile({
+  padding: "2rem",
+})};
+
 `;
 const Container = styled.div`
-  padding: 2rem 6rem;
-  ${aboutResponsive({
-    padding: "2rem 4rem",
-  })};
-  ${tablet({
-    padding: "2rem",
-  })};
+overflow-x: hidden;
 `;
 const AccoHead = styled.div`
   display: flex;
@@ -62,6 +64,39 @@ const Right = styled.div`
 `;
 
 const Accomodation = ({ text, similar }) => {
+  const size = WindowSize();
+  const [isMoved, setIsMoved] = useState(false);
+  const [slideNumber, setSlideNumber] = useState(0);
+  const listRef = useRef();
+
+  const handleClick = (direction) => {
+    setIsMoved(true);
+    const mainDistance = listRef.current.getBoundingClientRect().x;
+    console.log(mainDistance);
+    if (direction === "left" && slideNumber > 0) {
+      setSlideNumber(slideNumber - 1);
+      const distance = listRef.current.getBoundingClientRect().x - 176;
+      if (size.width > 780) {
+        listRef.current.style.transform = `translateX(${347 + distance}px)`;
+      } else if (size.width < 500) {
+        listRef.current.style.transform = `translateX(${147 + distance}px)`;
+      } else {
+        listRef.current.style.transform = `translateX(${347 + distance}px)`;
+      }
+    } else if (direction === "right" && slideNumber < 6) {
+      setSlideNumber(slideNumber + 1);
+      const distance = listRef.current.getBoundingClientRect().x - 176;
+      if (size.width > 780) {
+        listRef.current.style.transform = `translateX(${-347 + distance}px)`;
+      } else if (size.width < 500) {
+        listRef.current.style.transform = `translateX(${-147 + distance}px)`;
+      } else {
+        listRef.current.style.transform = `translateX(${-347 + distance}px)`;
+      }
+    } else {
+      return null;
+    }
+  };
   return (
     <Section similar={similar ? true : false}>
       <Container>
@@ -72,11 +107,11 @@ const Accomodation = ({ text, similar }) => {
             <Title>{text}</Title>
           </Left>
           <Right>
-            <Arrows outline="true" />
-            <Arrows />
+            <Arrows outline="true" handleClick={handleClick} position="left" />
+            <Arrows handleClick={handleClick} position="right" />
           </Right>
         </AccoHead>
-        <AccomodationList />
+        <AccomodationList getRef={listRef} />
       </Container>
     </Section>
   );

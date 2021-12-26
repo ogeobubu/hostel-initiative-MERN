@@ -1,13 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import styled from "styled-components";
-import myProfilePic from "../assets/myProfilePic.png";
 import { Edit, Menu } from "@mui/icons-material";
 import { aboutResponsive, tablet, mobile, largeTablet } from "../responsive.js";
 import { useDispatch } from "react-redux";
 import { openNav } from "../redux/navSlice";
 import WindowSize from "../hooks/windowSize";
-import firebase from "firebase";
-import useFirestore from "../hooks/useFirestore";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";

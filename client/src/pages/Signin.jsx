@@ -32,7 +32,7 @@ const Left = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  ${mobile({
+  ${aboutResponsive({
     padding: "1.5rem",
   })};
 `;
@@ -161,6 +161,8 @@ const Signin = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -168,10 +170,17 @@ const Signin = () => {
       email,
       password,
     };
+
+    if (!email || !password) {
+      return toast("All fields are required", { type: "error" });
+    }
+
     try {
+      setLoading(true);
       await axios.post("/api/users/login", loginUser);
       localStorage.setItem("firstLogin", true);
       dispatch(dispatchIsLogged());
+      setLoading(false);
       navigate("/dashboard");
 
       // const user = await auth.signInWithEmailAndPassword(email, password);
@@ -179,14 +188,15 @@ const Signin = () => {
       // toast("You have successfully logged in", { type: "success" });
       // navigate("/dashboard");
     } catch (error) {
+      setLoading(true);
       toast(error.response?.data?.message, { type: "error" });
+      setLoading(false);
     }
   };
   return (
     <>
       <Header />
       <Section>
-        <ToastContainer />
         <Container>
           <Left>
             <Head>Agent Sign in</Head>
@@ -226,7 +236,7 @@ const Signin = () => {
                 </FormGroup>
 
                 <ButtonContainer>
-                  <Button text="Sign in" main="true" />
+                  <Button text="Sign in" main="true" loading={loading} />
                 </ButtonContainer>
               </Form>
             </RightContainer>

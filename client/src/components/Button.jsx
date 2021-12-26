@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import WindowSize from "../hooks/windowSize";
 import { mobile } from "../responsive.js";
+import Spinner from "./Spinner";
 
 const Image = styled.img`
   margin-left: 39px;
@@ -65,19 +66,25 @@ const Buttons = styled.button`
   })};
 `;
 
-const Button = ({ text, outline, item, market, arrowRight, main }) => {
+const Button = ({ text, outline, item, market, arrowRight, main, loading }) => {
   const size = WindowSize();
 
   return (
-    <Buttons
-      market={market ? true : false}
-      item={item ? true : false}
-      outline={outline ? true : false}
-      size={size.width}
-      main={main ? true : false}
-    >
-      {text} {market && <Image src={arrowRight} alt="arrow" />}
-    </Buttons>
+    <>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <Buttons
+          market={market ? true : false}
+          item={item ? true : false}
+          outline={outline ? true : false}
+          size={size.width}
+          main={main ? true : false}
+        >
+          {text} {market && <Image src={arrowRight} alt="arrow" />}
+        </Buttons>
+      )}
+    </>
   );
 };
 

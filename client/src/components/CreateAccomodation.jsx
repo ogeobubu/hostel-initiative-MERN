@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import useStorage from "../hooks/useStorage";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import Spinner from "./Spinner";
 
 const CreateHead = styled.div`
   display: flex;
@@ -142,6 +143,7 @@ color: #d5d5d5;
 `;
 
 const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token);
   const userAccomodations = useSelector(
@@ -164,10 +166,6 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
   const [files, setFiles] = useState([]);
 
   const { urls, success, setSuccess } = useStorage(files);
-
-  console.log(urls);
-
-  console.log(urls, success);
 
   // useEffect(() => {
   //   firebase.auth().onAuthStateChanged(function (user) {
@@ -243,6 +241,7 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
 
     if (editID) {
       try {
+        setLoading(true);
         await axios.patch(
           `/api/accomodations/${editID}`,
           {
@@ -270,9 +269,11 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             },
           }
         );
+
         toast("You have successfully edited this accomodation.", {
           type: "success",
         });
+
         dispatch(
           dispatchAccomodations({
             ...accomodation,
@@ -286,9 +287,12 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             images: urls ? urls : accomodation.images?.map((image) => image),
           })
         );
+        setLoading(false);
         onClose();
       } catch (error) {
-        return toast(error.response?.data?.message, { type: "error" });
+        setLoading(true);
+        toast(error.response?.data?.message, { type: "error" });
+        setLoading(false);
       }
     } else {
       try {
@@ -320,7 +324,7 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
               { type: "error" }
             );
           }
-
+          setLoading(true);
           const response = await axios.post(
             "/api/accomodations/create",
             createAccomodationData,
@@ -350,10 +354,13 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
           setFeatures("");
           setFiles("");
           setSuccess("");
+          setLoading(false);
           onClose();
         }
       } catch (error) {
+        setLoading(true);
         return toast(error.response?.data?.message, { type: "error" });
+        setLoading(false);
       }
     }
   };
@@ -544,7 +551,11 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             {files && <ProgressBar files={files} setFiles={setFiles} />}
           </FormController>
 
-          <FormButton type="submit">{titleCreate}</FormButton>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <FormButton type="submit">{titleCreate}</FormButton>
+          )}
         </Form>
       </CreateBody>
     </>

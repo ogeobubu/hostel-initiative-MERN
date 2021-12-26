@@ -30,7 +30,7 @@ const Left = styled.div`
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  ${mobile({
+  ${aboutResponsive({
     padding: "1.5rem",
   })};
 `;
@@ -46,7 +46,7 @@ const Head = styled.h1`
   margin-left: 67px;
   width: 50%;
 
-  ${mobile({
+  ${tablet({
     marginLeft: 0,
     marginTop: "35px",
     width: "100%",
@@ -160,6 +160,8 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -174,8 +176,10 @@ const Signup = () => {
     };
 
     try {
+      setLoading(true);
       const response = await axios.post("/api/users/create", createUser);
       toast(response.data.message, { type: "success" });
+      setLoading(false);
       navigate("/signin");
 
       // const res = await auth.createUserWithEmailAndPassword(email, password);
@@ -191,14 +195,15 @@ const Signup = () => {
       // toast("You have successfully created an account", { type: "success" });
       // navigate("/signin");
     } catch (error) {
-      toast(error.response?.data?.message, { type: "error" });
+      setLoading(true);
+      toast(error.message, { type: "error" });
+      setLoading(false);
     }
   };
   return (
     <>
       <Header />
       <Section>
-        <ToastContainer />
         <Container>
           <Left>
             <Head>Agent Registration</Head>
@@ -282,7 +287,12 @@ const Signup = () => {
                 </FormGroup>
 
                 <ButtonContainer>
-                  <Button text="Register" main="true" type="submit" />
+                  <Button
+                    text="Register"
+                    main="true"
+                    type="submit"
+                    loading={loading}
+                  />
                 </ButtonContainer>
               </Form>
             </RightContainer>

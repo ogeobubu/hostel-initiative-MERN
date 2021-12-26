@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import location from "../assets/location.png";
 import Button from "./Button";
 import { mobile } from "../responsive.js";
 import { LocationOnOutlined } from "@mui/icons-material";
@@ -10,6 +9,7 @@ const Item = styled.div`
   background: #ffffff;
   border: 1px solid #d7d7d7;
   border-radius: 3px;
+  width: 100px;
   flex: ${(props) => (props.market === true ? 0 : 1)};
   margin-right: 35px;
   margin-bottom: ${(props) => props.market === true && "1.5rem"};

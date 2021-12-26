@@ -1,40 +1,19 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Backdrop, Box, Modal, Fade } from "@mui/material";
-import deleteBtn from "../assets/fluent_delete-48-filled (1).png";
-import { Menu, Close } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { openNav } from "../redux/navSlice";
 import {
   dispatchAllAccomodations,
   dispatchAccomodations,
   dispatchUserAllAccomodations,
 } from "../redux/accomodationsSlice";
-import WindowSize from "../hooks/windowSize";
-import { tablet, mobile } from "../responsive.js";
+import { tablet } from "../responsive.js";
 import ProgressBar from "../components/ProgressBar";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useStorage from "../hooks/useStorage";
-import firebase from "firebase";
-import { auth, database } from "../config";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 800,
-  bgcolor: "background.paper",
-  border: "none",
-  boxShadow: 24,
-  p: 3,
-  overflowY: "auto",
-  height: "100%",
-  borderRadius: "10px",
-};
 
 const CreateHead = styled.div`
   display: flex;
@@ -92,18 +71,6 @@ const FormInput = styled.input`
     line-height: 17px;
     color: #d5d5d5;
   }
-`;
-const FormTextarea = styled.textarea`
-width: 100%;
-height: 153px;
-background-color: #FCFCFC;
-border: 1px solid #F9F9F9;
-border-radius: 5px;
-padding: 1rem;
-outline: none;
-${tablet({
-  width: "100%",
-})};
 `;
 const FormSubLabel = styled.span`
   font-family: Lato;
@@ -188,9 +155,6 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
   );
   const user = useSelector((state) => state.user.user);
   const types = ["image/png", "image/jpeg"];
-  const [key, setKey] = useState("");
-  //form submission
-  const [userUid, setUserUid] = useState(null);
   const [description, setDescription] = useState("");
   const [features, setFeatures] = useState([]);
   const [address, setAddress] = useState("");
@@ -198,9 +162,8 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
   const [price, setPrice] = useState("");
   const [renewal, setRenewal] = useState("");
   const [files, setFiles] = useState([]);
-  const [authState, setAuthState] = useState("");
 
-  const { urls, progress, success, error, setSuccess } = useStorage(files);
+  const { urls, success, setSuccess } = useStorage(files);
 
   console.log(urls);
 
@@ -273,14 +236,14 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
     } catch (error) {
       toast(error.response.data.message, { type: "error" });
     }
-  }, [editID]);
+  }, [editID, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (editID) {
       try {
-        const response = await axios.patch(
+        await axios.patch(
           `/api/accomodations/${editID}`,
           {
             ...accomodation,

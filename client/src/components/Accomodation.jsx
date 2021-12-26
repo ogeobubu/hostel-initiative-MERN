@@ -3,8 +3,7 @@ import styled from "styled-components";
 import building from "../assets/building.png";
 import Arrows from "./Arrows";
 import AccomodationList from "./AccomodationList";
-import { aboutResponsive, tablet, mobile } from "../responsive.js";
-import { useSelector } from "react-redux";
+import { tablet, mobile } from "../responsive.js";
 import WindowSize from "../hooks/windowSize";
 
 const Section = styled.section`
@@ -63,7 +62,7 @@ const Right = styled.div`
   align-items: center;
 `;
 
-const Accomodation = ({ text, similar }) => {
+const Accomodation = ({ text, similar, similarData }) => {
   const size = WindowSize();
   const [isMoved, setIsMoved] = useState(false);
   const [slideNumber, setSlideNumber] = useState(0);
@@ -83,7 +82,7 @@ const Accomodation = ({ text, similar }) => {
       } else {
         listRef.current.style.transform = `translateX(${347 + distance}px)`;
       }
-    } else if (direction === "right" && slideNumber < 6) {
+    } else if (direction === "right" && slideNumber < 5) {
       setSlideNumber(slideNumber + 1);
       const distance = listRef.current.getBoundingClientRect().x - 176;
       if (size.width > 780) {
@@ -111,7 +110,7 @@ const Accomodation = ({ text, similar }) => {
             <Arrows handleClick={handleClick} position="right" />
           </Right>
         </AccoHead>
-        <AccomodationList getRef={listRef} />
+        <AccomodationList similarData={similarData} getRef={listRef} />
       </Container>
     </Section>
   );

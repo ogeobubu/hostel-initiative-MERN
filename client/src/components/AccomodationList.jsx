@@ -1,13 +1,14 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import AccomodationItem from "./AccomdationItem";
 import Button from "./Button";
-import image1 from "../assets/image1.png";
-import image2 from "../assets/image2.png";
-import image3 from "../assets/image3.png";
 import darkRight from "../assets/darkRight.png";
 import { mobile } from "../responsive.js";
-import { useSelector } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
+import Spinner from "./Spinner";
+import NoData from "./NoData";
 
 const Section = styled.section`
   margin-top: 40px;
@@ -29,63 +30,48 @@ transition: all 500ms;
   })};
 `;
 
-const data = [
-  {
-    id: 1,
-    image: image1,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 2,
-    image: image2,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 3,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 4,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 5,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 6,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-];
+const AccomodationList = ({ current, showPage, getRef, similarData }) => {
+  const [allAccomodations, setAllAccomodations] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [noData, setNoData] = useState(false);
 
-const AccomodationList = ({ current, showPage, getRef }) => {
-  const allAccomodations = useSelector(
-    (state) => state.accomodations.getAllAccomodations
-  );
+  useEffect(() => {
+    const getLatestAccomodation = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get("/api/accomodations?latest=true");
+        setAllAccomodations(response.data.message);
+        setLoading(false);
+      } catch (error) {
+        setLoading(true);
+        toast(error.response?.data?.message, { type: "error" });
+        setLoading(false);
+        setNoData(true);
+      }
+    };
+    getLatestAccomodation();
+  }, []);
+
   return (
     <>
       <Section>
-        <Container ref={getRef}>
-          {allAccomodations.map((item, index) => {
-            return <AccomodationItem key={item._id} item={item} />;
-          })}
-        </Container>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <Container ref={getRef}>
+            {noData ? (
+              <NoData />
+            ) : similarData ? (
+              similarData.map((item, index) => {
+                return <AccomodationItem key={index} item={item} />;
+              })
+            ) : (
+              allAccomodations.map((item, index) => {
+                return <AccomodationItem key={index} item={item} />;
+              })
+            )}
+          </Container>
+        )}
       </Section>
       <Link className="link" to="/market">
         <Button market="true" text="Go to Marketplace" arrowRight={darkRight} />

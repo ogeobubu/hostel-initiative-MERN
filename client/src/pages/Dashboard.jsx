@@ -3,15 +3,10 @@ import Sidebar from "../components/Sidebar";
 import styled from "styled-components";
 import Manage from "./Manage";
 import Account from "./Account";
-import firebase from "firebase";
 import DashboardHome from "./DashboardHome";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import { database } from "../config";
-import { dispatchUser, dispatchUserToken } from "../redux/userSlice";
-import {
-  dispatchAccomodations,
-  dispatchAllAccomodations,
-} from "../redux/accomodationsSlice";
+import { Routes, Route } from "react-router-dom";
+import { dispatchUserToken } from "../redux/userSlice";
+import { dispatchAllAccomodations } from "../redux/accomodationsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Signin from "../pages/Signin";
 import axios from "axios";
@@ -29,17 +24,6 @@ const Right = styled.div`
 const Dashboard = () => {
   const dispatch = useDispatch();
   const isLogged = useSelector((state) => state.user.isLogged);
-  console.log(isLogged);
-  const [authState, setAuthState] = useState("");
-  const navigate = useNavigate();
-  const [userUid, setUserUid] = useState(null);
-  const [profilesCheck, setProfilesCheck] = useState(null);
-  //snapshots
-  const [profiles, setProfiles] = useState([]);
-  //spinner
-  const [loading, setLoading] = useState(true);
-
-  const [filterQuery, setFilterQuery] = useState("");
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -52,9 +36,7 @@ const Dashboard = () => {
           dispatch(dispatchUserToken(response.data.access_token));
         };
         getToken();
-      } catch (error) {
-        console.log(error.message);
-      }
+      } catch (error) {}
     }
   }, [dispatch]);
 
@@ -63,9 +45,7 @@ const Dashboard = () => {
       try {
         const response = await axios.get("/api/accomodations");
         dispatch(dispatchAllAccomodations(response.data.message));
-      } catch (error) {
-        console.log(error.message);
-      }
+      } catch (error) {}
     };
     getAllAccomodations();
   }, [dispatch]);

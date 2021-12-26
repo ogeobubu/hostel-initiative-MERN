@@ -4,11 +4,11 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { aboutResponsive, tablet, mobile } from "../responsive.js";
-import image1 from "../assets/image1.png";
-import image2 from "../assets/image2.png";
-import image3 from "../assets/image3.png";
 import AccomodationItem from "../components/AccomdationItem";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import Spinner from "../components/Spinner";
+import NoData from "../components/NoData";
 
 const SectionMarket = styled.section`
   margin-top: 40px;
@@ -20,79 +20,6 @@ const SectionMarket = styled.section`
     marginLeft: 0,
   })};
 `;
-
-const data = [
-  {
-    id: 1,
-    image: image1,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 2,
-    image: image2,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 3,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 4,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 5,
-    image: image2,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 6,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 7,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 8,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 9,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-  {
-    id: 10,
-    image: image3,
-    name: "Single Room at Damico",
-    location: "12, Harakiri, Damico Estate, Ile-ife",
-    price: "80,000",
-  },
-];
 
 const Section = styled.section`
   margin-top: 40px;
@@ -179,17 +106,6 @@ const OptionContainer = styled.div`
   margin-right: 28px;
   margin-bottom: 1.5rem;
 `;
-const InputOption = styled.input`
-  width: 323px;
-  height: 52px;
-  background: #fdfdfd;
-  border: 1px solid #f1f1f1;
-  border-radius: 4px;
-  padding: 1rem 2rem;
-  ${mobile({
-    width: "100%",
-  })};
-`;
 const LoadButton = styled.button`
   cursor: pointer;
   border: none;
@@ -226,20 +142,29 @@ width: 323px;
 const Option = styled.option``;
 
 const Market = () => {
+  const [loading, setLoading] = useState(false);
+  const [noData, setNoData] = useState(false);
   const [featureSearch, setFeatureSearch] = useState(null);
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState("");
   const [sort, setSort] = useState("newest");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  console.log(filteredProducts);
-
-  console.log(filters);
-
   useEffect(() => {
     const getSearch = async () => {
-      const response = await axios.get(`/api/accomodations?feature=${search}`);
-      setFeatureSearch(response.data.message);
+      try {
+        setLoading(true);
+        const response = await axios.get(
+          `/api/accomodations?feature=${search}`
+        );
+        setFeatureSearch(response.data.message);
+        setLoading(false);
+      } catch (error) {
+        setLoading(true);
+        toast(error.response?.data?.message, { type: "error" });
+        setLoading(false);
+        setNoData(true);
+      }
     };
     getSearch();
   }, [search]);
@@ -324,17 +249,29 @@ const Market = () => {
           </Flex>
 
           <SectionMarket>
-            {filters
-              ? filteredProducts?.map((item, index) => {
-                  return (
-                    <AccomodationItem key={index} item={item} market="true" />
-                  );
-                })
-              : allAccomodations?.slice(0, 8).map((item, index) => {
-                  return (
-                    <AccomodationItem key={index} item={item} market="true" />
-                  );
-                })}
+            {loading ? (
+              <Spinner />
+            ) : noData ? (
+              <NoData />
+            ) : featureSearch ? (
+              featureSearch.map((item, index) => {
+                return (
+                  <AccomodationItem key={index} item={item} market="true" />
+                );
+              })
+            ) : filters ? (
+              filteredProducts?.map((item, index) => {
+                return (
+                  <AccomodationItem key={index} item={item} market="true" />
+                );
+              })
+            ) : (
+              allAccomodations?.slice(0, 8).map((item, index) => {
+                return (
+                  <AccomodationItem key={index} item={item} market="true" />
+                );
+              })
+            )}
           </SectionMarket>
 
           <LoadButton>Load More</LoadButton>

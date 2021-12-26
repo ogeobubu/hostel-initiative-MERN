@@ -1,49 +1,19 @@
 import { useState, useEffect } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { aboutResponsive, tablet, largeTablet, mobile } from "../responsive.js";
 import location from "../assets/location.png";
 import building from "../assets/building.png";
-import me from "../assets/me.png";
 import recent from "../assets/recent.png";
-import photo1 from "../assets/photo1.png";
-import photo2 from "../assets/photo2.png";
-import photo3 from "../assets/photo3.png";
-import photo4 from "../assets/photo4.png";
-import photo5 from "../assets/photo5.png";
-import photo6 from "../assets/photo6.png";
 import whatsapp from "../assets/whatsapp.png";
 import gmail from "../assets/gmail.png";
 import Footer from "./Footer";
 import Accomodation from "./Accomodation";
 import axios from "axios";
-
-const data = [
-  {
-    id: 1,
-    image: photo1,
-  },
-  {
-    id: 2,
-    image: photo2,
-  },
-  {
-    id: 3,
-    image: photo3,
-  },
-  {
-    id: 4,
-    image: photo4,
-  },
-  {
-    id: 5,
-    image: photo5,
-  },
-  {
-    id: 6,
-    image: photo6,
-  },
-];
+import Spinner from "./Spinner";
+import NoData from "./NoData";
+import { LocationOnOutlined, HistoryOutlined } from "@mui/icons-material";
+import moment from "moment";
 
 const Section = styled.section`
   margin-top: 60px;
@@ -105,6 +75,7 @@ const Right = styled.div`
 `;
 const Flex = styled.div`
   display: flex;
+  align-items: center;
 `;
 const Price = styled.h5`
   font-family: Lato;
@@ -355,128 +326,176 @@ const FlexBox = styled.div`
 const ProductItem = () => {
   const { _id } = useParams();
   const [accomodation, setAccomodation] = useState([]);
+  const [similarData, setSimilarData] = useState([]);
   const [user, setUser] = useState({});
+
+  const [loading, setLoading] = useState(false);
+  const [noData, setNoData] = useState(false);
 
   useEffect(() => {
     const getSingleAccomodation = async () => {
-      const response = await axios.get(`/api/accomodations/${_id}`);
-      setAccomodation(response.data.message);
+      try {
+        const response = await axios.get(`/api/accomodations/${_id}`);
+        setAccomodation(response.data.message);
+      } catch (error) {}
     };
     getSingleAccomodation();
   }, [_id]);
 
   useEffect(() => {
     const getUser = async () => {
-      const response = await axios.get(`/api/users/${accomodation.userId}`);
-      setUser(response.data.message);
+      try {
+        const response = await axios.get(`/api/users/${accomodation.userId}`);
+        setUser(response.data.message);
+      } catch (error) {}
     };
     getUser();
   }, [accomodation.userId]);
 
+  useEffect(() => {
+    const getSimilar = async () => {
+      try {
+        if (accomodation.features) {
+          const response = await axios.get(
+            `/api/accomodations?feature=${accomodation.features[0]}`
+          );
+          setSimilarData(response.data.message);
+        } else {
+          const response = await axios.get(`/api/accomodations?latest=true`);
+          setSimilarData(response.data.message);
+        }
+      } catch (error) {}
+    };
+    getSimilar();
+  }, [accomodation.features]);
+
   return (
     <Section>
-      <Container>
-        <Head>
-          <Left>
-            <Title>{accomodation?.title}</Title>
-            <Flex>
-              <Image src={location} alt="location" />
-              <Location>{accomodation?.location}</Location>
-            </Flex>
-          </Left>
-          <Right>
-            <Price>
-              NGN{accomodation?.price}
-              <Span>/yr</Span>
-            </Price>
-            <Flex>
-              <Image src={recent} alt="recent" />
-              <Date>{accomodation?.date}</Date>
-            </Flex>
-          </Right>
-        </Head>
+      {loading ? (
+        <Spinner />
+      ) : noData ? (
+        <NoData />
+      ) : (
+        <Container>
+          <Head>
+            <Left>
+              <Title>{accomodation?.title}</Title>
+              <Flex>
+                <LocationOnOutlined
+                  style={{
+                    fontSize: "1.5rem",
+                    color: "grey",
+                    marginRight: ".5rem",
+                  }}
+                />
+                <Location>{accomodation?.location}</Location>
+              </Flex>
+            </Left>
+            <Right>
+              <Price>
+                NGN{accomodation?.price}
+                <Span>/yr</Span>
+              </Price>
+              <Flex>
+                <HistoryOutlined
+                  style={{
+                    fontSize: "1.5rem",
+                    color: "grey",
+                    marginRight: ".5rem",
+                  }}
+                />
 
-        <Photos>
-          {accomodation?.images ? (
-            accomodation?.images.map((image, index) => {
-              return <Photo key={index} src={image} alt={index} />;
-            })
-          ) : (
-            <Photo
-              src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=784&q=80"
-              alt="default image"
-            />
-          )}
-        </Photos>
+                <Date>{moment(accomodation?.date).format("LL")}</Date>
+              </Flex>
+            </Right>
+          </Head>
 
-        <FlexOne>
-          <FlexLeft>
-            <AccoHead>
-              <Div>
-                <Me>
-                  <Image src={building} alt="building" />
-                  <Line />
-                  <De>Description</De>
-                </Me>
-                <Text>{accomodation?.description}</Text>
-              </Div>
-            </AccoHead>
+          <Photos>
+            {accomodation?.images ? (
+              accomodation?.images.map((image, index) => {
+                return <Photo key={index} src={image} alt={index} />;
+              })
+            ) : (
+              <Photo
+                src="https://images.unsplash.com/photo-1574362848149-11496d93a7c7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=784&q=80"
+                alt="default image"
+              />
+            )}
+          </Photos>
 
-            <AccoHead>
-              <Div>
-                <Me>
-                  <Image src={building} alt="building" />
-                  <Line />
-                  <De>Features</De>
-                </Me>
-                <Col>
-                  {accomodation?.features &&
-                    accomodation?.features.map((feature) => {
-                      return <ColText>{feature}</ColText>;
-                    })}
-                </Col>
-              </Div>
-            </AccoHead>
-          </FlexLeft>
-          <FlexRight>
-            <Main>Agent</Main>
-            <Profile>
-              <ImageContainer>
-                <ImageProfile src={user?.profilePicture} alt="me" />
-              </ImageContainer>
-              <Bio>
-                <Name>
-                  {user?.firstName} {user?.lastName}
-                </Name>
-                <Des>
-                  {user?.bio
-                    ? user?.bio
-                    : `Agent ${user?.firstName} doesn't have a bio for now.`}
-                </Des>
-                <FlexBox>
-                  {user?.whatsapp && (
+          <FlexOne>
+            <FlexLeft>
+              <AccoHead>
+                <Div>
+                  <Me>
+                    <Image src={building} alt="building" />
+                    <Line />
+                    <De>Description</De>
+                  </Me>
+                  <Text>{accomodation?.description}</Text>
+                </Div>
+              </AccoHead>
+
+              <AccoHead>
+                <Div>
+                  <Me>
+                    <Image src={building} alt="building" />
+                    <Line />
+                    <De>Features</De>
+                  </Me>
+                  <Col>
+                    {accomodation?.features &&
+                      accomodation?.features.map((feature) => {
+                        return <ColText>{feature}</ColText>;
+                      })}
+                  </Col>
+                </Div>
+              </AccoHead>
+            </FlexLeft>
+            <FlexRight>
+              <Main>Agent</Main>
+              <Profile>
+                <ImageContainer>
+                  <ImageProfile src={user?.profilePicture} alt="me" />
+                </ImageContainer>
+                <Bio>
+                  <Name>
+                    {user?.firstName} {user?.lastName}
+                  </Name>
+                  <Des>
+                    {user?.bio
+                      ? user?.bio
+                      : `Agent ${user?.firstName} doesn't have a bio for now.`}
+                  </Des>
+                  <FlexBox>
+                    {user?.whatsapp && (
+                      <Box>
+                        <a
+                          className="link"
+                          href={`https://wa.me/${user?.whatsapp}/?text=GreetingsAgent${user?.firstName}`}
+                        >
+                          <ImageSocial src={whatsapp} alt="whatsapp" />
+                        </a>
+                      </Box>
+                    )}
+
                     <Box>
-                      <a
-                        className="link"
-                        href={`https://wa.me/${user?.whatsapp}/?text=GreetingsAgent${user?.firstName}`}
-                      >
-                        <ImageSocial src={whatsapp} alt="whatsapp" />
+                      <a className="link" href={`mailto:${user?.email}`}>
+                        <ImageSocial src={gmail} alt="gmail" />
                       </a>
                     </Box>
-                  )}
-
-                  <Box>
-                    <a className="link" href={`mailto:${user?.email}`}>
-                      <ImageSocial src={gmail} alt="gmail" />
-                    </a>
-                  </Box>
-                </FlexBox>
-              </Bio>
-            </Profile>
-          </FlexRight>
-        </FlexOne>
-      </Container>
-      <Accomodation text="Similar to this" similar="true" />
+                  </FlexBox>
+                </Bio>
+              </Profile>
+            </FlexRight>
+          </FlexOne>
+        </Container>
+      )}
+      <Accomodation
+        similarData={similarData}
+        text="Similar to this"
+        similar="true"
+      />
       <Footer />
     </Section>
   );

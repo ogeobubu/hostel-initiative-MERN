@@ -4,12 +4,11 @@ import styled from "styled-components";
 import { aboutResponsive, tablet, mobile } from "../responsive";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../config";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { dispatchUser, dispatchIsLogged } from "../redux/userSlice.js";
+import { dispatchIsLogged } from "../redux/userSlice.js";
 
 const Section = styled.section``;
 
@@ -170,7 +169,7 @@ const Signin = () => {
       password,
     };
     try {
-      const response = await axios.post("/api/users/login", loginUser);
+      await axios.post("/api/users/login", loginUser);
       localStorage.setItem("firstLogin", true);
       dispatch(dispatchIsLogged());
       navigate("/dashboard");

@@ -51,10 +51,6 @@ background: ${(props) => (props.img ? `url(${hero}) no-repeat` : null)};
   width: 630px;
   height: 100vh;
 `;
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-`;
 const Flex = styled.div`
   display: flex;
   flex-direction: ${(props) => props.size && "column"};

@@ -1,24 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { Backdrop, Box, Modal, Fade } from "@mui/material";
-import { Menu, Close } from "@mui/icons-material";
-import { useDispatch, useSelector } from "react-redux";
+import { Menu } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
 import { openNav } from "../redux/navSlice";
 import WindowSize from "../hooks/windowSize";
-import { tablet, mobile } from "../responsive.js";
-import ProgressBar from "../components/ProgressBar";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import useStorage from "../hooks/useStorage";
-import firebase from "firebase";
-import { auth, database } from "../config";
 import CreateAccomodation from "../components/CreateAccomodation";
 import TableComponent from "../components/TableComponent";
-import axios from "axios";
-import {
-  dispatchAllAccomodations,
-  dispatchAccomodations,
-} from "../redux/accomodationsSlice";
 
 const style = {
   position: "absolute",
@@ -96,7 +86,6 @@ const Search = () => {
 };
 
 const Manage = () => {
-  const token = useSelector((state) => state.user.token);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -105,20 +94,7 @@ const Manage = () => {
   const handleClick = () => {
     dispatch(openNav());
   };
-  const [data, setData] = useState([]);
-
-  const [title, setTitle] = useState("");
-  console.log(title);
-  const [address, setAddress] = useState("");
-  const [price, setPrice] = useState("");
-  const [renewal, setRenewal] = useState("");
-  const [description, setDescription] = useState("");
-  const [features, setFeatures] = useState("");
-  const [file, setFile] = useState(null);
-  const { url, progress } = useStorage(file);
-  const accomodations = useSelector(
-    (state) => state.accomodations.getAllAccomodations
-  );
+  const [data] = useState([]);
 
   // useEffect(() => {
   //   try {

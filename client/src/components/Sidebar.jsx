@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import logo from "../assets/logo.png";
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Close } from "@mui/icons-material";
 import { openNav } from "../redux/navSlice";
@@ -101,7 +101,6 @@ const Logout = styled.div`
 `;
 
 const Sidebar = () => {
-  const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const size = WindowSize();
   const open = useSelector((state) => state.navbar.open);
@@ -113,11 +112,10 @@ const Sidebar = () => {
   const handleLogout = async () => {
     try {
       const response = await axios.get("/api/users/logout");
-      console.log(response.data);
       localStorage.removeItem("firstLogin");
       window.location.href = "/";
     } catch (error) {
-      return toast(error.response?.data?.message, { type: "error" });
+      return toast(error, { type: "error" });
     }
   };
   return (

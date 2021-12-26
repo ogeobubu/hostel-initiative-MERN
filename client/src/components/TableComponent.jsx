@@ -1,19 +1,14 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import deleteBtn from "../assets/fluent_delete-48-filled (1).png";
-import { tablet, mobile, aboutResponsive } from "../responsive.js";
-import { ToastContainer, toast } from "react-toastify";
+import { mobile, aboutResponsive } from "../responsive.js";
+import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { Backdrop, Box, Modal, Fade } from "@mui/material";
 import WindowSize from "../hooks/windowSize";
 import CreateAccomodation from "./CreateAccomodation";
 import axios from "axios";
-import {
-  dispatchAccomodations,
-  dispatchAllAccomodations,
-  dispatchUserAllAccomodations,
-} from "../redux/accomodationsSlice";
-import useStorage from "../hooks/useStorage";
+import { dispatchUserAllAccomodations } from "../redux/accomodationsSlice";
 
 const style = {
   position: "absolute",
@@ -112,18 +107,12 @@ const Tbody = styled.tbody``;
 
 const TableComponent = ({ data }) => {
   const dispatch = useDispatch();
-  const accomodations = useSelector(
-    (state) => state.accomodations.getAllAccomodations
-  );
-  const accomodation = useSelector(
-    (state) => state.accomodations.accomodations
-  );
+
   const userAllAccomodations = useSelector(
     (state) => state.accomodations.getAllUserAccomodations
   );
   const token = useSelector((state) => state.user.token);
   const [editID, setEditID] = useState("");
-  const [deleteID, setDeleteID] = useState("");
   const size = WindowSize();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);

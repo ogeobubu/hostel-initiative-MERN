@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import styled from "styled-components";
 import rightArrow from "../assets/rightArrow.png";
 import leftArrow from "../assets/leftArrow.png";

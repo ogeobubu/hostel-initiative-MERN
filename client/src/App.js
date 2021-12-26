@@ -11,13 +11,9 @@ import Market from "./pages/Market";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
-import { auth, database } from "./config";
+import NoPageFound from "./pages/NoPageFound";
 import { dispatchAllAccomodations } from "./redux/accomodationsSlice";
-import {
-  dispatchUserToken,
-  dispatchUser,
-  dispatchIsLogged,
-} from "./redux/userSlice";
+import { dispatchUserToken, dispatchUser } from "./redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -37,9 +33,7 @@ function App() {
           dispatch(dispatchUserToken(response.data.access_token));
         };
         getToken();
-      } catch (error) {
-        toast(error.response?.data?.message, { type: "error" });
-      }
+      } catch (error) {}
     }
   }, [dispatch]);
 
@@ -97,6 +91,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/product/:_id" element={<Product />} />
           <Route path="/market" element={<Market />} />
+          <Route path="*" element={<NoPageFound />} />
           <Route
             path="/signup"
             element={

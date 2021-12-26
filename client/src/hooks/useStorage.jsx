@@ -31,7 +31,7 @@ const useStorage = (files) => {
           );
         });
 
-        await Promise.all(storeImagesArray)
+        return await Promise.all(storeImagesArray)
           .then(() => setSuccess("All images have been uploaded successfully"))
           .catch((error) => setError(error));
       }

@@ -78,6 +78,7 @@ Node.js is an open-source, cross-platform, back-end JavaScript runtime environme
 - [x] Control User List
 - [x] Upload images using Firebase
 - [x] Get Similar Accomodations
+- [] Payment Integration
 
 
 ### Screenshots

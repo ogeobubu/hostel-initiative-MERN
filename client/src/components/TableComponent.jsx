@@ -9,6 +9,8 @@ import WindowSize from "../hooks/windowSize";
 import CreateAccomodation from "./CreateAccomodation";
 import axios from "axios";
 import { dispatchUserAllAccomodations } from "../redux/accomodationsSlice";
+import Spinner from "./Spinner";
+import NoData from "./NoData";
 
 const style = {
   position: "absolute",
@@ -45,9 +47,9 @@ const Tr = styled.tr`
   margin-bottom: 11px;
   display: grid;
   grid-template-columns: 4fr 7fr 3fr 1fr;
-    place-content: center;
-    align-items: center;
-    justify-content: center;
+  place-content: center;
+  align-items: center;
+  justify-content: center;
 `;
 const Td = styled.td``;
 const RightEnd = styled.div`
@@ -147,27 +149,31 @@ const TableComponent = ({ data }) => {
   return (
     <>
       <TableDiv>
-        <Table>
-          <Tbody>
-            {userAllAccomodations?.map(({ _id, title, location, price }) => (
-              <Tr key={_id}>
-                <Td>{title}</Td>
-                <Td>{location}</Td>
-                <Td>NGN{price}</Td>
-                <Td>
-                  <RightEnd>
-                    <EditButton onClick={() => handleEdit(_id)}>
-                      Edit
-                    </EditButton>
-                    <DeleteButton onClick={() => handleDelete(_id)}>
-                      <img src={deleteBtn} alt="delete" />
-                    </DeleteButton>
-                  </RightEnd>
-                </Td>
-              </Tr>
-            ))}
-          </Tbody>
-        </Table>
+        {!userAllAccomodations ? (
+          <Spinner />
+        ) : (
+          <Table>
+            <Tbody>
+              {userAllAccomodations?.map(({ _id, title, location, price }) => (
+                <Tr key={_id}>
+                  <Td>{title}</Td>
+                  <Td>{location}</Td>
+                  <Td>NGN{price}</Td>
+                  <Td>
+                    <RightEnd>
+                      <EditButton onClick={() => handleEdit(_id)}>
+                        Edit
+                      </EditButton>
+                      <DeleteButton onClick={() => handleDelete(_id)}>
+                        <img src={deleteBtn} alt="delete" />
+                      </DeleteButton>
+                    </RightEnd>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        )}
       </TableDiv>
 
       <LoadMoreButton>Load More</LoadMoreButton>

@@ -119,6 +119,8 @@ exports.getAccessToken = (req, res) => {
         });
       };
 
+      console.log(user);
+
       const access_token = createAccessToken({ id: user.id });
 
       res.status(200).json({ access_token });

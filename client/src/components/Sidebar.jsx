@@ -7,6 +7,7 @@ import { openNav } from "../redux/navSlice";
 import WindowSize from "../hooks/windowSize";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { dispatchLogout } from "../redux/userSlice.js";
 
 const Section = styled.section`
   width: 350px;
@@ -111,9 +112,9 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.get("/api/users/logout");
       localStorage.removeItem("firstLogin");
-      window.location.href = "/";
+      dispatch(dispatchLogout());
+      window.location.href = "/signin";
     } catch (error) {
       return toast(error, { type: "error" });
     }

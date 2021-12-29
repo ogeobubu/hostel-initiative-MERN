@@ -1143,6 +1143,11 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-flutterwave@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-flutterwave/-/react-flutterwave-1.0.4.tgz#e6367defeb207d7d6c0e1cff3b4b3eb4dd27f4bd"
+  integrity sha512-AQVL9eDwlmRYL9D20BUIgNqnSfCC/h1OrbpWF+3WX4sS9tjDtj1sJlVoAX0v9Lzt+sKENdxpcEQ7lq7wcsdoKQ==
+
 readdirp@~3.6.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/readdirp/-/readdirp-3.6.0.tgz#74a370bd857116e245b29cc97340cd431a02a6c7"

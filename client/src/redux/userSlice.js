@@ -8,7 +8,7 @@ export const userSlice = createSlice({
     user: {},
   },
   reducers: {
-    dispatchIsLogged: (state, action) => {
+    dispatchIsLogged: (state) => {
       state.isLogged = true;
     },
     dispatchUserToken: (state, action) => {
@@ -17,9 +17,16 @@ export const userSlice = createSlice({
     dispatchUser: (state, action) => {
       state.user = action.payload;
     },
+    dispatchLogout: (state) => {
+      state.isLogged = false;
+    },
   },
 });
 
-export const { dispatchIsLogged, dispatchUserToken, dispatchUser } =
-  userSlice.actions;
+export const {
+  dispatchIsLogged,
+  dispatchUserToken,
+  dispatchUser,
+  dispatchLogout,
+} = userSlice.actions;
 export default userSlice.reducer;

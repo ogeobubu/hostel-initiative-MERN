@@ -6,6 +6,7 @@ const morgan = require("morgan");
 require("dotenv/config");
 const userRoutes = require("./routes/userRoutes");
 const accomodationRoutes = require("./routes/accomodationRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 const app = express();
 const path = require("path");
 
@@ -15,6 +16,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/api/users", userRoutes);
 app.use("/api/accomodations", accomodationRoutes);
+app.use("/api/payment", paymentRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

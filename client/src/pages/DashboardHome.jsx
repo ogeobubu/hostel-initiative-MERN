@@ -8,6 +8,7 @@ import axios from "axios";
 import TableComponent from "../components/TableComponent";
 import { dispatchUserAllAccomodations } from "../redux/accomodationsSlice.js";
 import { Link } from "react-router-dom";
+import FlutterWave from "../components/FlutterWave";
 
 const Section = styled.section`
   padding: 2.0625rem 1.3125rem;
@@ -119,7 +120,9 @@ const TableTitle = styled.h6`
 `;
 
 const DashboadHome = () => {
+  const [anotherUser, setAnotherUser] = useState(null);
   const user = useSelector((state) => state.user.user);
+  const token = useSelector((state) => state.user.token);
   const userAllAccomodations = useSelector(
     (state) => state.accomodations.getAllUserAccomodations
   );
@@ -130,6 +133,18 @@ const DashboadHome = () => {
   const handleClick = () => {
     dispatch(openNav());
   };
+
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await axios.get("/api/users", {
+        headers: {
+          Authorization: token,
+        },
+      });
+      setAnotherUser(response.data.message);
+    };
+    getUser();
+  }, []);
 
   useEffect(() => {
     const getAllAccomodations = async () => {
@@ -212,9 +227,13 @@ const DashboadHome = () => {
             <CardTitle>TOTAL ACCOMODATIONS</CardTitle>
             <CardNumber>{userAllAccomodations?.length}</CardNumber>
             <CardButtonContainer>
-              <Link className="link" to="/dashboard/manage">
-                <CardButton>Create New</CardButton>
-              </Link>
+              {anotherUser?.isVerified ? (
+                <Link className="link" to="/dashboard/manage">
+                  <CardButton>Create New</CardButton>
+                </Link>
+              ) : (
+                <FlutterWave user={user} token={token} />
+              )}
             </CardButtonContainer>
           </Card>
 

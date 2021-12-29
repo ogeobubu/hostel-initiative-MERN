@@ -22,8 +22,10 @@ const Right = styled.div`
 `;
 
 const Dashboard = () => {
+  const [anotherUser, setAnotherUser] = useState(null);
   const dispatch = useDispatch();
   const isLogged = useSelector((state) => state.user.isLogged);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
@@ -124,7 +126,7 @@ const Dashboard = () => {
             />
             <Route
               path="/manage"
-              element={isLogged === true ? <Manage /> : <Signin />}
+              element={isLogged === true ? <Manage user={user} /> : <Signin />}
             />
             <Route
               path="/account"

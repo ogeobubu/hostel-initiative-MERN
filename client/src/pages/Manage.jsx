@@ -2,13 +2,14 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Backdrop, Box, Modal, Fade } from "@mui/material";
 import { Menu } from "@mui/icons-material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { openNav } from "../redux/navSlice";
 import WindowSize from "../hooks/windowSize";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateAccomodation from "../components/CreateAccomodation";
 import TableComponent from "../components/TableComponent";
+import FlutterWave from "../components/FlutterWave";
 
 const style = {
   position: "absolute",
@@ -85,7 +86,8 @@ const Search = () => {
   );
 };
 
-const Manage = () => {
+const Manage = ({ user }) => {
+  const token = useSelector((state) => state.user.token);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -170,7 +172,11 @@ const Manage = () => {
             )}
             <Title>Manage Accomodation</Title>
           </TitleMenu>
-          <CreateButton onClick={handleOpen}>Create New</CreateButton>
+          {user?.isVerified ? (
+            <CreateButton onClick={() => handleOpen()}>Create New</CreateButton>
+          ) : (
+            <FlutterWave user={user} token={token} />
+          )}
         </Head>
 
         <Search />

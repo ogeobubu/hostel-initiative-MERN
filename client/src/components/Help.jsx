@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "./Button";
 import help from "../assets/help.png";
 import { aboutResponsive, tablet, mobile } from "../responsive.js";
+import FadeInWhenInView from "../hooks/FadeInWhenInView";
 
 const Section = styled.section`
   margin-top: 70px;
@@ -50,26 +51,28 @@ const Text = styled.p`
 
 const Help = () => {
   return (
-    <Section>
-      <Container>
-        <Title>Let’s help you get a comfortable accomodation</Title>
-      </Container>
-      <Image src={help} alt="help" />
-      <Container>
-        <Text>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </Text>
-        <Link className="link" to="/market">
-          <Button text="Go to Marketplace" />
-        </Link>
-      </Container>
-    </Section>
+    <FadeInWhenInView>
+      <Section>
+        <Container>
+          <Title>Let’s help you get a comfortable accomodation</Title>
+        </Container>
+        <Image src={help} alt="help" />
+        <Container>
+          <Text>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </Text>
+          <Link className="link" to="/market">
+            <Button text="Go to Marketplace" />
+          </Link>
+        </Container>
+      </Section>
+    </FadeInWhenInView>
   );
 };
 

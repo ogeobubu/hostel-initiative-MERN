@@ -4,6 +4,7 @@ import me from "../assets/me.png";
 import logo from "../assets/logo.png";
 import Arrows from "./Arrows";
 import { aboutResponsive, tablet, mobile } from "../responsive.js";
+import FadeInWhenInView from "../hooks/FadeInWhenInView";
 
 const Section = styled.section`
   margin-top: 120px;
@@ -171,66 +172,68 @@ const Customers = () => {
   };
   return (
     <Section>
-      <Container>
-        <Left>
-          {data.map((info, index) => {
-            return (
-              <>
-                {index === current && (
-                  <>
-                    <Text>{info.text}</Text>
+      <FadeInWhenInView>
+        <Container>
+          <Left>
+            {data.map((info, index) => {
+              return (
+                <>
+                  {index === current && (
+                    <>
+                      <Text>{info.text}</Text>
 
-                    <User>
-                      <ImageContainer>
-                        <Image src={info.image} alt="me" />
-                      </ImageContainer>
-                      <Bio>
-                        <Name>{info.name}</Name>
-                        <Job>{info.job}</Job>
-                      </Bio>
-                    </User>
-                  </>
-                )}
-              </>
-            );
-          })}
-          <Flex>
-            <Arrows
-              outline="true"
-              profileOutline="true"
-              customerDirection="left"
-              prevSlide={prevSlide}
-              style={{ cursor: "pointer" }}
-            />
-            <Arrows
-              profile="true"
-              darkRights="darkRight"
-              customerDirection="right"
-              nextSlide={nextSlide}
-              style={{ cursor: "pointer" }}
-            />
-          </Flex>
-        </Left>
-        <Right>
-          <Title>Our Agents and customers trust us</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et
-          </Desc>
+                      <User>
+                        <ImageContainer>
+                          <Image src={info.image} alt="me" />
+                        </ImageContainer>
+                        <Bio>
+                          <Name>{info.name}</Name>
+                          <Job>{info.job}</Job>
+                        </Bio>
+                      </User>
+                    </>
+                  )}
+                </>
+              );
+            })}
+            <Flex>
+              <Arrows
+                outline="true"
+                profileOutline="true"
+                customerDirection="left"
+                prevSlide={prevSlide}
+                style={{ cursor: "pointer" }}
+              />
+              <Arrows
+                profile="true"
+                darkRights="darkRight"
+                customerDirection="right"
+                nextSlide={nextSlide}
+                style={{ cursor: "pointer" }}
+              />
+            </Flex>
+          </Left>
+          <Right>
+            <Title>Our Agents and customers trust us</Title>
+            <Desc>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et
+            </Desc>
 
-          <Meet>
-            <Head>Meet Our Partners</Head>
-            <Grid>
-              <Image src={logo} alt="logo" />
-              <Image src={logo} alt="logo" />
-              <Image src={logo} alt="logo" />
-              <Image src={logo} alt="logo" />
-              <Image src={logo} alt="logo" />
-              <Image src={logo} alt="logo" />
-            </Grid>
-          </Meet>
-        </Right>
-      </Container>
+            <Meet>
+              <Head>Meet Our Partners</Head>
+              <Grid>
+                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" />
+                <Image src={logo} alt="logo" />
+              </Grid>
+            </Meet>
+          </Right>
+        </Container>
+      </FadeInWhenInView>
     </Section>
   );
 };

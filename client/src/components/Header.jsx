@@ -2,6 +2,7 @@ import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { aboutResponsive, tablet } from "../responsive.js";
+import { motion } from "framer-motion";
 
 const HeaderSection = styled.header`
   position: relative;
@@ -72,22 +73,28 @@ const navData = [
 
 const Header = () => {
   return (
-    <HeaderSection>
-      <Container>
-        <Link to="/" className="link">
-          <Logo src={logo} alt="logo" />
-        </Link>
-        <Nav>
-          <NavList>
-            {navData.map(({ id, name, link }) => (
-              <Link key={id} className="link" to={link}>
-                <NavItem>{name}</NavItem>
-              </Link>
-            ))}
-          </NavList>
-        </Nav>
-      </Container>
-    </HeaderSection>
+    <motion.div
+      initial={{ x: "-50px", opacity: 0 }}
+      animate={{ x: 0, opacity: 1 }}
+      exit={{ y: "-50px", opacity: 0 }}
+    >
+      <HeaderSection>
+        <Container>
+          <Link to="/" className="link">
+            <Logo src={logo} alt="logo" />
+          </Link>
+          <Nav>
+            <NavList>
+              {navData.map(({ id, name, link }) => (
+                <Link key={id} className="link" to={link}>
+                  <NavItem>{name}</NavItem>
+                </Link>
+              ))}
+            </NavList>
+          </Nav>
+        </Container>
+      </HeaderSection>
+    </motion.div>
   );
 };
 

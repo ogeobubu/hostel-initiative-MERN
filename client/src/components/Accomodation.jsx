@@ -5,6 +5,7 @@ import Arrows from "./Arrows";
 import AccomodationList from "./AccomodationList";
 import { tablet, mobile } from "../responsive.js";
 import WindowSize from "../hooks/windowSize";
+import FadeInWhenInView from "../hooks/FadeInWhenInView";
 
 const Section = styled.section`
   margin-top: ${(props) => (props.similar === true ? "99px" : "200px")};
@@ -99,17 +100,24 @@ const Accomodation = ({ text, similar, similarData }) => {
   return (
     <Section similar={similar ? true : false}>
       <Container>
-        <AccoHead>
-          <Left>
-            <Image src={building} alt="building" />
-            <Line />
-            <Title>{text}</Title>
-          </Left>
-          <Right>
-            <Arrows outline="true" handleClick={handleClick} position="left" />
-            <Arrows handleClick={handleClick} position="right" />
-          </Right>
-        </AccoHead>
+        <FadeInWhenInView>
+          <AccoHead>
+            <Left>
+              <Image src={building} alt="building" />
+              <Line />
+              <Title>{text}</Title>
+            </Left>
+            <Right>
+              <Arrows
+                outline="true"
+                handleClick={handleClick}
+                position="left"
+              />
+              <Arrows handleClick={handleClick} position="right" />
+            </Right>
+          </AccoHead>
+        </FadeInWhenInView>
+
         <AccomodationList similarData={similarData} getRef={listRef} />
       </Container>
     </Section>

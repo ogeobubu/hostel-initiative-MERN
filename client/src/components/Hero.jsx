@@ -4,6 +4,7 @@ import Button from "./Button";
 import hero from "../assets/hero.png";
 import { aboutResponsive, tablet, mobile } from "../responsive.js";
 import WindowSize from "../hooks/windowSize";
+import { motion } from "framer-motion";
 
 const HeroSection = styled.section`
   overflow-x: hidden;
@@ -63,15 +64,21 @@ const Hero = () => {
     <HeroSection>
       <Container>
         <Left>
-          <Text>Connecting you with the right accomodation in Ile-ife</Text>
-          <Flex size={size.width < 530}>
-            <Link className="link" to="/market">
-              <Button text="Go to Marketplace" main="true" />
-            </Link>
-            <Link className="link" to="/signup">
-              <Button text="Become an Agent" size="true" outline="true" />
-            </Link>
-          </Flex>
+          <motion.div
+            initial={{ x: "-50px", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ y: "-50px", opacity: 0 }}
+          >
+            <Text>Connecting you with the right accomodation in Ile-ife</Text>
+            <Flex size={size.width < 530}>
+              <Link className="link" to="/market">
+                <Button text="Go to Marketplace" main="true" />
+              </Link>
+              <Link className="link" to="/signup">
+                <Button text="Become an Agent" size="true" outline="true" />
+              </Link>
+            </Flex>
+          </motion.div>
         </Left>
         <Right img={hero} />
       </Container>

@@ -49,7 +49,7 @@ background: ${(props) => (props.img ? `url(${hero}) no-repeat` : null)};
   top: 0;
   z-index: 1;
   width: 630px;
-  height: 90vh;
+  height: 100vh;
 `;
 const Flex = styled.div`
   display: flex;

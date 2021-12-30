@@ -14,7 +14,6 @@ const Container = styled.div`
   display: flex;
   justify-content: space-between;
   height: 70vh;
-  align-items: center;
   ${aboutResponsive({
     padding: "2rem 4rem",
   })};
@@ -50,7 +49,7 @@ background: ${(props) => (props.img ? `url(${hero}) no-repeat` : null)};
   top: 0;
   z-index: 1;
   width: 630px;
-  height: 100vh;
+  height: 90vh;
 `;
 const Flex = styled.div`
   display: flex;

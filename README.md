@@ -1,6 +1,6 @@
 # Hostel Initiative
 
-A system built for hostel accommodation allocation for Obafemi Awolowo University students to connect students with the right accommodation in Ile-Ife, Osun State, Nigeria.
+A system built for hostel accommodation allocation for Obafemi Awolowo University students to connect students with the right accommodation in Ile-Ife, Osun State, Nigeria. Here is the Figma design link: https://www.figma.com/file/2Eyo8lM8Z7OzYJMp3axW3H/Hostel-Initiative?node-id=0%3A1
 
 ## Installation: Get Started
 

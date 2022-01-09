@@ -1,0 +1,87 @@
+.aboutMore{
+    margin-top: 90px;
+    width: 100%;
+}
+
+.aboutMore > div:first-of-type {
+    display: flex;
+    align-items: center;
+    /* border: 1px solid red; */
+    padding-left: 147px;
+    padding-right: 136px;
+}
+
+@media screen and (max-width:1000px) {
+    .aboutMore > div:first-of-type{
+        width: 90%;
+        margin: 0 auto;
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 790px) {
+    .aboutMore > div:first-of-type{
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        /* align-items: center; */
+        text-align: center;
+    }
+
+    .aboutMore > div:first-of-type > button{
+        margin-top: 20px;
+        margin-inline: auto;
+    }
+}
+
+.aboutMore > div:first-of-type > button{
+    padding: 12px 28px;
+    background: #FDFDFD;
+    border: 2px solid #854BFF;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 188.5%;
+    color: #854BFF;
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.aboutMore > div > button:hover{
+    background: #854BFF;
+    color: white;
+}
+
+.aboutMore > div > .aboutMore__info > h1{
+    font-weight: bold;
+    font-size: 45px;
+    line-height: 153.5%;
+    color: #3A3B7B;
+    /* margin-left: 147px; */
+}
+
+
+
+.aboutMore__backgroundImg{
+    background: url('../assets/learnMoreImg.png');
+    height: 370px;
+    margin-top: 50px;
+}
+
+.aboutMore__more{
+    width: 80%;
+    max-width: 952px;
+    margin-top: 55px;
+    font-size: 16px;
+    line-height: 224.5%;
+    color: #7B7B7B;
+    /* border: 1px solid red; */
+    margin-left: 147px;
+    margin-bottom: 10vh;
+}
+
+@media screen and (max-width: 800px) {
+    .aboutMore__more{
+        margin-inline: auto;
+    }
+}

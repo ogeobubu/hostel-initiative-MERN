@@ -2,6 +2,7 @@ import styled from "styled-components";
 import logo1 from "../assets/logo1.png";
 import Button from "./Button";
 import { aboutResponsive, tablet } from "../responsive.js";
+import { Link } from "react-router-dom";
 
 const Section = styled.footer`
   margin-top: 100px;
@@ -128,18 +129,26 @@ const Footer = () => {
         <Left>
           <Product>
             <Tag>Products</Tag>
-            <Span>Marketplace</Span>
+            <Link className="link" to="/market">
+              <Span>Marketplace</Span>
+            </Link>
             <Span>Become an Agent</Span>
           </Product>
           <Company>
             <Tag>Company</Tag>
-            <Span>About us</Span>
-            <Span>Contact us</Span>
+            <Link className="link" to="/about">
+              <Span>About us</Span>
+            </Link>
+            <Link className="link" to="/contact">
+              <Span>Contact us</Span>
+            </Link>
           </Company>
           <Other>
             <Span>Privacy Policy</Span>
             <Span>Terms of service</Span>
-            <Span>FAQs</Span>
+            <Link className="link" to="/faq">
+              <Span>FAQs</Span>
+            </Link>
           </Other>
         </Left>
         <Right>

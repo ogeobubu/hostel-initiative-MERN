@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&family=Lora:wght@700&display=swap');
+
+.contact{
+    /* background: red; */
+    width: 80%;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+.contact > h1,
+.contact > .contact__info > p{
+    text-align: center;
+}
+
+.contact > h1{
+    font-family: 'Lora', serif;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 153.5%;
+    color: #854BFF;
+    margin-bottom: 17px;
+}
+
+.contact > .contact__info {
+    margin-bottom: 80px;
+}
+
+.contact > .contact__info > p{
+    font-size: 14px;
+    line-height: 224.5%;
+    color: #7B7B7B;
+}
+
+.contact__form{
+    width: 80%;
+    margin-inline: auto;
+    /* background: red; */
+    /* border: 1px solid red; */
+}
+
+.contact__form > div > label {
+    font-family: 'Lato', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 17px;
+    color: #8F8F8F;
+}
+
+.contact__form  > div > input{
+    margin-top: 10px;
+    width: 100%;
+    background: #f0f0f0;
+    /* background: #FCFCFC; */
+    /* please the background used above makes the input element more obvious */
+    border: 1px solid #F9F9F9;
+    border-radius: 5px;
+    padding: 16px 24px;
+}
+
+.contact__form > div > textarea{
+    margin-top: 10px;
+    background: #f0f0f0;
+    /* width: 100px; */
+    border: 1px solid #F9F9F9;
+    border-radius: 5px;
+    width: 100%;    
+    padding-top: 16px;
+    padding-bottom: 169px;
+    padding-left: 29px;
+}
+
+.contact__form > button{
+    margin-top: 45px;
+    width: 100%;
+    padding: 11px 0;
+    background: #854BFF;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+}

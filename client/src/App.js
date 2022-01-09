@@ -11,6 +11,8 @@ import Market from "./pages/Market";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
+import Contact from "./pages/Contact";
+import FAQ from "./pages/FAQ";
 import NoPageFound from "./pages/NoPageFound";
 import { dispatchAllAccomodations } from "./redux/accomodationsSlice";
 import { dispatchUserToken, dispatchUser } from "./redux/userSlice";
@@ -91,6 +93,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/product/:_id" element={<Product />} />
           <Route path="/market" element={<Market />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<NoPageFound />} />
           <Route
             path="/signup"

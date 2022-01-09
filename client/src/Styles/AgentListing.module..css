@@ -1,0 +1,83 @@
+.agentList__hero{
+    background: linear-gradient(97.65deg, #3A3B7B -9.97%, #C13FFF 17.71%, #854BFF 66.42%);
+    width: 100%;
+}
+
+.agentList__heroInfo{
+    display: flex;
+    grid-gap: 74px;
+    width: 85%;
+    margin-inline: auto;
+    padding-bottom: 77px;
+
+}
+
+.agentList__heroInfo > .agentList__information{
+    /* border: 1px solid yellow; */
+    padding-top: 20px;
+    color: white;
+}
+
+.agentList__information >h1{
+    font-family: 'Lora', 'san-serif';
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 153.5%;
+}
+
+.agentList__information > div > p{
+    font-family: 'Lato', 'san-serif';
+    font-size: 15px;
+    line-height: 183%;
+}
+
+.agentList__information > div{
+    margin-bottom: 40px;
+}
+
+.agent__socialMedia{
+    display: flex;
+}
+
+.agent__socialMedia > button{
+    border: none;
+    cursor: pointer;
+}
+
+.agent__socialMedia > button > img{
+    width: 25px;
+    object-fit: contain;
+}
+
+.agent__socialMedia > button:first-of-type{
+    margin-right: 10px;
+}
+
+.agent__socialMedia > button:nth-child(3){
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+font-size: 18px;
+line-height: 179%;
+/* or 32px */
+
+
+color: #3A3B7B;
+
+}
+
+.agent__socialMedia > button:nth-child(3) > span {
+    margin-left: 20px;
+}
+
+.agent__socialMedia > button{
+    padding: 11px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.agent__socialMedia > button:first-of-type > button{
+    /* color: green; */
+    background: green;
+}

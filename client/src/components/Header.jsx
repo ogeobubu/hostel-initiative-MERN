@@ -62,12 +62,12 @@ const navData = [
   {
     id: 3,
     name: "About us",
-    link: "/",
+    link: "/about",
   },
   {
     id: 4,
     name: "Contact us",
-    link: "/",
+    link: "/contact",
   },
 ];
 

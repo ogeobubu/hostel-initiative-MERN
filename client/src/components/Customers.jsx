@@ -62,7 +62,8 @@ const Bio = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Image = styled.img``;
+const Image = styled.img`
+`;
 const Name = styled.h4`
   font-family: Lato;
   font-style: normal;

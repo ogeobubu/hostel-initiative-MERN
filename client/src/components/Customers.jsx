@@ -148,14 +148,14 @@ const Grid = styled.div`
 const data = [
   {
     id: 1,
-    text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse",
+    text: "Using Hostel Initiative has been a big game changer for me as I have moved from 5 to 10 customers per month to 20 to 25 per month. I would not want agents to miss out on this oppourtunity",  
     image: me,
     name: "Akinyemi Abass",
     job: "Agent for Heroku house",
   },
   {
     id: 2,
-    text: "A text from Oge Obubu.. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doeiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enimad minim veniam, quis nostrud exercitation ullamco laboris nisi utaliquip ex ea commodo consequat. Duis aute irure dolor inreprehenderit in voluptate velit esse",
+    text: "This platform has helped to bridge the gap between us Agents and students. I have really enjoyed using the Hostel Initiative serivices as i dont have to go overboard by going house to house with students",
     image: me,
     name: "Andreti Obubu",
     job: "Agent for Reto house",
@@ -219,8 +219,7 @@ const Customers = () => {
           <Right>
             <Title>Our Agents and customers trust us</Title>
             <Desc>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et
+              Meet our customers and agents who we have partnered with on our journey to making this service a success
             </Desc>
 
             <Meet>

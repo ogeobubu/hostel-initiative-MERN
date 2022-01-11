@@ -195,8 +195,7 @@ const Signup = () => {
           <Left>
             <Head>Agent Registration</Head>
             <Desc>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Becoming Hostel Initiative is extremely easy as filling the following form. Be rest assured that your information are securely safe with us. Your information will never be divulged to anyone without your consent
             </Desc>
             <Span>
               Already an agent?{" "}

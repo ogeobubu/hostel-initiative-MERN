@@ -196,8 +196,7 @@ const Signin = () => {
           <Left>
             <Head>Agent Sign in</Head>
             <Desc>
-              We help you connect to interested student(s) who is/are ready to
-              get an accomodation. Login now to access your dashboard.
+              Becoming Hostel Initiative is extremely easy as filling the following form. Be rest assured that your information are securely safe with us. Your information will never be divulged to anyone without your consent
             </Desc>
             <Span>
               Don’t have an account?{" "}

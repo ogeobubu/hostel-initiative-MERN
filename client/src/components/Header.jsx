@@ -22,7 +22,7 @@ const Container = styled.div`
   })};
 `;
 const Logo = styled.img`
-width: 190px;
+
 `;
 const Nav = styled.nav`
   ${tablet({

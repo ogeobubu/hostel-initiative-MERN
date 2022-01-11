@@ -11,6 +11,7 @@ import Market from "./pages/Market";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
+import About from "./pages/About";
 import Contact from "./pages/Contact";
 import FAQ from "./pages/FAQ";
 import NoPageFound from "./pages/NoPageFound";
@@ -53,26 +54,6 @@ function App() {
     }
   }, [token, dispatch]);
 
-  // useEffect(() => {
-  //   const getAllAccomodations = async () => {
-  //     await database.ref(`accomodations`).on("value", (snapshot) => {
-  //       if (snapshot.exists()) {
-  //         let returnArr = [];
-
-  //         snapshot.forEach((childSnapshot) => {
-  //           let item = childSnapshot.val();
-  //           returnArr.push(item);
-  //         });
-  //         console.log(returnArr);
-  //         dispatch(dispatchAllAccomodations(returnArr));
-  //       } else {
-  //         console.log("No data available");
-  //       }
-  //     });
-  //   };
-  //   getAllAccomodations();
-  // }, []);
-
   useEffect(() => {
     const getAllAccomodations = async () => {
       try {
@@ -94,6 +75,7 @@ function App() {
           <Route path="/product/:_id" element={<Product />} />
           <Route path="/market" element={<Market />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="*" element={<NoPageFound />} />
           <Route

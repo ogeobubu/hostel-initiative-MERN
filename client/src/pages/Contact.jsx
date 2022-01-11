@@ -25,7 +25,7 @@ const Contact = () => {
           <div>
             <label htmlFor="name">Name</label>
             <br />
-            <input type="text" placeholder="e.g Naira Marley" />
+            <input type="text" placeholder="e.g Emore Ogheneyoma" />
           </div>
 
           <div>

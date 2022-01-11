@@ -1,14 +1,9 @@
 import React from "react";
-import Navbar from "../components/Header";
-import Customer from "../components/Customers";
-import Footer from "../components/Footer";
+import styles from '../Styles/About.module.css';
 
-import styles from "../Styles/about.module.css";
-
-const About = () => {
+const AboutCom = () => {
   return (
     <React.Fragment>
-      <Navbar />
       <div className={styles.aboutMore}>
         <div>
           <div className={styles.aboutMore__info}>
@@ -30,10 +25,8 @@ const About = () => {
           consequatur obcaecati laboriosam? Eos, aperiam placeat!
         </div>
       </div>
-      <Customer />
-      <Footer />
     </React.Fragment>
   );
 };
 
-export default About;
+export default AboutCom;

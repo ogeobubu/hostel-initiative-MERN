@@ -213,10 +213,7 @@ const Market = () => {
         <Container>
           <Head>Marketplace</Head>
           <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo.
+            Lets us make your search easy and worthwhile as we connect you with the right accomodation that befits you. No more headaches and agents stress
           </Desc>
           <InputContainer>
             <Input

@@ -167,63 +167,6 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
 
   const { urls, success, setSuccess } = useStorage(files);
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged(function (user) {
-  //     if (!user) {
-  //       setAuthState(false);
-  //     } else {
-  //       setAuthState(true);
-  //       setUserUid(user.uid);
-  //     }
-  //   });
-  // }, []);
-  // // Write edit logic here
-  // // Get Single Accomodation here
-  // useEffect(() => {
-  //   const getSingleAccomodation = async () => {
-  //     if (userUid) {
-  //       await database
-  //         .ref()
-  //         .child("accomodations")
-  //         .child(userUid)
-  //         .get()
-  //         .then((snapshot) => {
-  //           if (snapshot.exists()) {
-  //             let returnArr = [];
-  //             const test = [editID];
-  //             snapshot.forEach((childSnapshot) => {
-  //               let item = childSnapshot.val();
-  //               item.key = childSnapshot.key;
-  //               returnArr.push(item);
-  //             });
-  //             setAccomodation(returnArr.filter((m) => test.includes(m.id)));
-  //           } else {
-  //             console.log("No data available");
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error(error);
-  //         });
-  //     }
-  //   };
-  //   getSingleAccomodation();
-  // }, [userUid]);
-
-  // useEffect(() => {
-  //   const getKeyValue = async () => {
-  //     await database.ref("accomodations/" + userUid).on("value", (snapshot) => {
-  //       snapshot.forEach((childSnapshot) => {
-  //         var childKey = childSnapshot.key;
-  //         setKey(childKey.toString());
-  //         console.log(childKey.toString());
-  //       });
-  //     });
-  //   };
-  //   getKeyValue();
-  // }, []);
-
-  // NEWWWWWWW COMMMMMMMEEEEEENNNNNNNNTTT--------------------------------------------------------
-
   useEffect(() => {
     try {
       const getAccomodation = async () => {
@@ -365,61 +308,6 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
     }
   };
 
-  // if (editID) {
-  //   // Edit logic
-  //   const updateAccomodation = {};
-
-  //   var postData = {
-  //     title,
-  //     address,
-  //     price,
-  //     renewal,
-  //     description,
-  //     features,
-  //     image: url,
-  //   };
-
-  //   await database.ref().child(`accomodations/${userUid}/${key}`);
-
-  //   var updates = {};
-  //   updates[`accomodations/${userUid}/${key}`] = {
-  //     postData,
-  //     ...accomodation[0],
-  //   };
-
-  //   await database.ref().update(updates);
-
-  //   toast("You have successfully edited this accomodation", {
-  //     type: "success",
-  //   });
-  // } else {
-  //   if (
-  //     (title === "" || address === "" || price === "" || renewal === "",
-  //     description === "",
-  //     features === "",
-  //     url === null)
-  //   ) {
-  //     toast("All fields are required!", { type: "error" });
-  //   } else {
-  //     const createAccomodationData = {
-  //       id: uuidv4(),
-  //       title,
-  //       address,
-  //       price,
-  //       renewal,
-  //       description,
-  //       features,
-  //       image: url,
-  //     };
-  //     await database
-  //       .ref("accomodations/" + userUid)
-  //       .push()
-  //       .set(createAccomodationData);
-  //     toast("You have successfully created a new accomodation", {
-  //       type: "success",
-  //     });
-  //   }
-  // }
   return (
     <>
       <CreateHead>
@@ -477,7 +365,7 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
               onChange={(e) => setRenewal(+e.target.value)}
               defaultValue={editID && accomodation?.renewal}
             >
-              <Option disabled>Renewal</Option>
+              <Option value="0">Renewal</Option>
               <Option value="1">1 year</Option>
               <Option value="2">2 years</Option>
               <Option value="3">3 years</Option>
@@ -520,9 +408,16 @@ const CreateAccomodation = ({ onClose, titleCreate, editID }) => {
             <FormSubLabel>
               You can select and upload multiple photos.
             </FormSubLabel>
-            <FormInput type="text" disabled={true} />
+            <FormInput
+              type="text"
+              disabled={true}
+              placeholder={success ? success : "No Image Uploaded Yet."}
+            />
             <FormImageClick>
-              <label style={{ cursor: "pointer", fontSize: "14px" }} for="fusk">
+              <label
+                style={{ cursor: "pointer", fontSize: "14px" }}
+                htmlFor="fusk"
+              >
                 + Add Photo
               </label>
               <FormImage

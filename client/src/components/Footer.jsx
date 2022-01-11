@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import logo1 from "../assets/logo1.png";
+import logo from "../assets/logo.png";
+import logoFooter from "../assets/logoFooter.png";
 import Button from "./Button";
 import { aboutResponsive, tablet } from "../responsive.js";
 import { Link } from "react-router-dom";
@@ -116,10 +118,7 @@ const Copy = styled.p`
   color: #ffffff;
 `;
 const Image = styled.img`
-  height: 100%;
-  ${tablet({
-    width: "50%",
-  })}
+  width: 190px;
 `;
 
 const Footer = () => {
@@ -161,7 +160,7 @@ const Footer = () => {
       <hr />
       <Bottom>
         <Container>
-          <Image src={logo1} alt="logo" />
+          <Image src={logoFooter} alt="logo" />
           <Copy>Copyright HostelInitiative 2021</Copy>
         </Container>
       </Bottom>

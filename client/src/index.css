@@ -23,7 +23,8 @@ margin: 0 auto;
 
 .link {
   text-decoration: none;
-  color: inherit;
+    color: inherit;
+    
 }
 
 .custom-file-input::-webkit-file-upload-button {

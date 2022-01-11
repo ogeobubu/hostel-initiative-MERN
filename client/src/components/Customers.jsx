@@ -63,7 +63,9 @@ const Bio = styled.div`
   flex-direction: column;
 `;
 const Image = styled.img`
+width: 150px;
 `;
+const ImageProfile = styled.img``
 const Name = styled.h4`
   font-family: Lato;
   font-style: normal;
@@ -185,7 +187,7 @@ const Customers = () => {
 
                       <User>
                         <ImageContainer>
-                          <Image src={info.image} alt="me" />
+                          <ImageProfile src={info.image} alt="me" />
                         </ImageContainer>
                         <Bio>
                           <Name>{info.name}</Name>

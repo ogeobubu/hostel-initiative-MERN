@@ -182,11 +182,6 @@ const Signin = () => {
       dispatch(dispatchIsLogged());
       setLoading(false);
       navigate("/dashboard");
-
-      // const user = await auth.signInWithEmailAndPassword(email, password);
-      // console.log(user);
-      // toast("You have successfully logged in", { type: "success" });
-      // navigate("/dashboard");
     } catch (error) {
       setLoading(true);
       toast(error.response?.data?.message, { type: "error" });
@@ -201,8 +196,8 @@ const Signin = () => {
           <Left>
             <Head>Agent Sign in</Head>
             <Desc>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              We help you connect to interested student(s) who is/are ready to
+              get an accomodation. Login now to access your dashboard.
             </Desc>
             <Span>
               Don’t have an account?{" "}

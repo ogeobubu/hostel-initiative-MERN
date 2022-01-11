@@ -181,19 +181,6 @@ const Signup = () => {
       toast(response.data.message, { type: "success" });
       setLoading(false);
       navigate("/signin");
-
-      // const res = await auth.createUserWithEmailAndPassword(email, password);
-      // const user = await res.user;
-      // await database.ref("users/" + user.uid).set({
-      //   uid: user.uid,
-      //   fullName,
-      //   agencyName,
-      //   email,
-      //   phone,
-      //   address,
-      // });
-      // toast("You have successfully created an account", { type: "success" });
-      // navigate("/signin");
     } catch (error) {
       setLoading(true);
       toast(error.message, { type: "error" });

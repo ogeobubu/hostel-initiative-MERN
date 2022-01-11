@@ -21,7 +21,9 @@ const Container = styled.div`
     padding: "2rem",
   })};
 `;
-const Logo = styled.img``;
+const Logo = styled.img`
+width: 190px;
+`;
 const Nav = styled.nav`
   ${tablet({
     display: "none",
@@ -41,12 +43,12 @@ const NavItem = styled.li`
   margin-right: 34px;
   cursor: pointer;
 `;
-// const MobileNav = styled.div`
-//   display: none;
-//   ${tablet({
-//     display: "block",
-//   })}
-// `;
+
+const LogoImage = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
+`
 
 const navData = [
   {
@@ -81,7 +83,9 @@ const Header = () => {
       <HeaderSection>
         <Container>
           <Link to="/" className="link">
+          <LogoImage>
             <Logo src={logo} alt="logo" />
+            </LogoImage>
           </Link>
           <Nav>
             <NavList>

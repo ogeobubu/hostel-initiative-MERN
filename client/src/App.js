@@ -71,25 +71,35 @@ function App() {
       <ToastContainer />
       <Router>
         <Routes>
+          {/* Homepage Route */}
           <Route path="/" element={<Home />} />
+          {/* Product page Route */}
           <Route path="/product/:_id" element={<Product />} />
+          {/* Market page Route */}
           <Route path="/market" element={<Market />} />
+          {/* Contact page Route */}
           <Route path="/contact" element={<Contact />} />
+          {/* About page Route */}
           <Route path="/about" element={<About />} />
+          {/* FAQ page Route */}
           <Route path="/faq" element={<FAQ />} />
+          {/* When a page doesn't exists it renders this page route. */}
           <Route path="*" element={<NoPageFound />} />
+          {/* Once a user is logged in he/she can access the Dashboard route else the user is redirected to signup page*/}
           <Route
             path="/signup"
             element={
               isLogged === true ? <Navigate to="/dashboard" /> : <Signup />
             }
           />
+          {/* Once a user is logged in he/she can access the Dashboard route else the user is redirected to signin page*/}
           <Route
             path="/signin"
             element={
               isLogged === true ? <Navigate to="/dashboard" /> : <Signin />
             }
           />
+          {/* Once a user is logged in he/she can access the Dashboard route else the user is redirected to signin page*/}
           <Route
             path="/dashboard/*"
             element={

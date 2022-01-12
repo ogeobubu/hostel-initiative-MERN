@@ -213,7 +213,9 @@ const Market = () => {
         <Container>
           <Head>Marketplace</Head>
           <Desc>
-            Lets us make your search easy and worthwhile as we connect you with the right accomodation that befits you. No more headaches and agents stress
+            Lets us make your search easy and worthwhile as we connect you with
+            the right accomodation that befits you. No more headaches and agents
+            stress
           </Desc>
           <InputContainer>
             <Input
@@ -227,13 +229,17 @@ const Market = () => {
             <OptionContainer>
               <Select name="location" onChange={handleFilters}>
                 <Option disabled>Location</Option>
+                <Option>Asherifa</Option>
+                <Option>Mayfair</Option>
+                <Option>Lagere</Option>
               </Select>
             </OptionContainer>
             <OptionContainer>
               <Select name="renewal" onChange={handleFilters}>
                 <Option disabled>Renewal</Option>
-                <Option>a year</Option>
-                <Option>a year</Option>
+                <Option>1 year</Option>
+                <Option>2 years</Option>
+                <Option>3 years</Option>
               </Select>
             </OptionContainer>
             <OptionContainer>

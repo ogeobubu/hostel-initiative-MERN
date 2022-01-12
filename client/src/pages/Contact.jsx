@@ -12,13 +12,10 @@ const Contact = () => {
 
         <div className={styles.contact__info}>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna{" "}
+            While we're good with connecting you to an agent, there are simpler
+            ways for us to get
           </p>
-          <p>
-            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo
-          </p>
+          <p>in touch and answer your questions.</p>
         </div>
 
         <div className={styles.contact__form}>

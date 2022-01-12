@@ -22,12 +22,13 @@ const About = () => {
         <div className={styles.aboutMore__backgroundImg}></div>
 
         <div className={styles.aboutMore__more}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus
-          natus, itaque officia culpa nobis error sapiente commodi odio tempora
-          quidem omnis earum dolorem illum, magni quaerat, architecto quas.
-          Dolorem magni magnam culpa, asperiores harum ratione eos iure
-          voluptatum consequuntur voluptatem numquam accusantium nobis saepe,
-          consequatur obcaecati laboriosam? Eos, aperiam placeat!
+          It's so not everyone has enough time to get a walk during business
+          times, but when working in a field that involves psychological
+          business, taking the path is inevitably to let your mind have some
+          rest. It might also help you to get the method. You don't want to move
+          kilometres, but go to the store or take a walk in the office's field
+          or inside, for a couple of hours and a glance of the idea will come.
+          You can easily have an accomodation or rent through this platform.
         </div>
       </div>
       <Customer />

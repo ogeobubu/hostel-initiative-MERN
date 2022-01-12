@@ -72,7 +72,6 @@ const Accomodation = ({ text, similar, similarData }) => {
   const handleClick = (direction) => {
     setIsMoved(true);
     const mainDistance = listRef.current.getBoundingClientRect().x;
-    console.log(mainDistance);
     if (direction === "left" && slideNumber > 0) {
       setSlideNumber(slideNumber - 1);
       const distance = listRef.current.getBoundingClientRect().x - 176;

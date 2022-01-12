@@ -59,13 +59,13 @@ const Help = () => {
         <Image src={help} alt="help" />
         <Container>
           <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            Hostel Initiative business is located at Ile-Ife, Osun State. It is
+            no hidden fact that the public universities in Nigeria have a major
+            problem with accommodation. The Obafemi Awolowo University (OAU)
+            suffers the same predicament, having a population of over 35,000.
+            Hostel Initiative business aims to solve accommodation problems like
+            this, taking it up a notch for students to have direct access to
+            agents on this platform.
           </Text>
           <Link className="link" to="/market">
             <Button text="Go to Marketplace" />

@@ -22,13 +22,13 @@ const About = () => {
         <div className={styles.aboutMore__backgroundImg}></div>
 
         <div className={styles.aboutMore__more}>
-          It's so not everyone has enough time to get a walk during business
-          times, but when working in a field that involves psychological
-          business, taking the path is inevitably to let your mind have some
-          rest. It might also help you to get the method. You don't want to move
-          kilometres, but go to the store or take a walk in the office's field
-          or inside, for a couple of hours and a glance of the idea will come.
-          You can easily have an accomodation or rent through this platform.
+          Hostel Initiative business is located at Ile-Ife, Osun State. It is no
+          hidden fact that the public universities in Nigeria have a major
+          problem with accommodation. The Obafemi Awolowo University (OAU)
+          suffers the same predicament, having a population of over 35,000.
+          Hostel Initiative business aims to solve accommodation problems like
+          this, taking it up a notch for students to have direct access to
+          agents on this platform.
         </div>
       </div>
       <Customer />

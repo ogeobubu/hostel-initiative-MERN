@@ -52,68 +52,6 @@ const Dashboard = () => {
     getAllAccomodations();
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged(function (user) {
-  //     if (!user) {
-  //       setAuthState(false);
-  //     } else {
-  //       setAuthState(true);
-  //       setUserUid(user.uid);
-  //     }
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   database.ref("users/" + userUid).on("value", (snapshot) => {});
-  // }, [userUid]);
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     if (userUid) {
-  //       await database
-  //         .ref()
-  //         .child("users")
-  //         .child(userUid)
-  //         .get()
-  //         .then((snapshot) => {
-  //           if (snapshot.exists()) {
-  //             dispatch(dispatchUser(snapshot.val()));
-  //           } else {
-  //             console.log("No data available");
-  //           }
-  //         })
-  //         .catch((error) => {
-  //           console.error(error);
-  //         });
-  //     }
-  //   };
-  //   getUser();
-  // }, [userUid, dispatch]);
-
-  // useEffect(() => {
-  //   const getAccomodationsForSpecificUser = async () => {
-  //     if (userUid) {
-  //       await database
-  //         .ref(`accomodations/${userUid}`)
-  //         .on("value", (snapshot) => {
-  //           if (snapshot.exists()) {
-  //             let returnArr = [];
-
-  //             snapshot.forEach((childSnapshot) => {
-  //               let item = childSnapshot.val();
-  //               returnArr.push(item);
-  //             });
-  //             console.log(returnArr);
-  //             dispatch(dispatchAccomodations(returnArr));
-  //           } else {
-  //             console.log("No data available");
-  //           }
-  //         });
-  //     }
-  //   };
-  //   getAccomodationsForSpecificUser();
-  // }, [userUid, dispatch]);
-
   return (
     <Section>
       <Flex>

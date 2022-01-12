@@ -162,45 +162,6 @@ const DashboadHome = () => {
     getAllUserAccomodations();
   }, [user._id, dispatch]);
 
-  // useEffect(() => {
-  //   firebase.auth().onAuthStateChanged(function (user) {
-  //     if (!user) {
-  //       setAuthState(false);
-  //     } else {
-  //       setAuthState(true);
-  //       setUserUid(user.uid);
-  //     }
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   const getKeyValue = async () => {
-  //     await database.ref("accomodations/" + userUid).on("value", (snapshot) => {
-  //       snapshot.forEach((childSnapshot) => {
-  //         var childKey = childSnapshot.key;
-  //         setKey(childKey.toString());
-  //         console.log(childKey.toString());
-  //       });
-  //     });
-  //   };
-  //   getKeyValue();
-  // }, []);
-
-  // Delete Single Accomodation here
-
-  // const deleteSingleAccomodation = async (id) => {
-  //   if (id) {
-  //     await database.ref(`accomodations/${userUid}`).child(`${id}`).remove();
-  //   }
-  // };
-
-  // const handleDelete = (id) => {
-  //   if (id) {
-  //     setDeleteID(id);
-  //     deleteSingleAccomodation();
-  //   }
-  // };
-
   return (
     <>
       <Section>
@@ -239,12 +200,12 @@ const DashboadHome = () => {
 
           <Card>
             <CardTitle>TOTAL ENGAGEMENTS</CardTitle>
-            <CardNumber>null</CardNumber>
+            <CardNumber>12</CardNumber>
           </Card>
 
           <Card>
             <CardTitle>TOTAL AGENTS</CardTitle>
-            <CardNumber>null</CardNumber>
+            <CardNumber>189</CardNumber>
           </Card>
         </Cards>
 

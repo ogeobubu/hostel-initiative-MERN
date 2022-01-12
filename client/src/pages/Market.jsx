@@ -228,7 +228,7 @@ const Market = () => {
           <Flex>
             <OptionContainer>
               <Select name="location" onChange={handleFilters}>
-                <Option disabled>Location</Option>
+                <Option>Location</Option>
                 <Option>Asherifa</Option>
                 <Option>Mayfair</Option>
                 <Option>Lagere</Option>
@@ -236,7 +236,7 @@ const Market = () => {
             </OptionContainer>
             <OptionContainer>
               <Select name="renewal" onChange={handleFilters}>
-                <Option disabled>Renewal</Option>
+                <Option>Renewal</Option>
                 <Option>1 year</Option>
                 <Option>2 years</Option>
                 <Option>3 years</Option>
